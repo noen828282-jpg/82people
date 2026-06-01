@@ -1,0 +1,22 @@
+node_modules/
+out/
+*.vsix
+.vscode-test/
+preview.html
+.DS_Store
+releases/
+.env
+*.bak.*
+
+# Game Assets (heavy binary singles)
+assets/pixel/
+
+# Personal Wiki / Second Brain (to ignore duplicate _company and templates)
+.secondbrain/
+
+# Agent Run Session Logs
+_company/sessions/
+
+# Python cache
+**/__pycache__/
+*.pyc

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx --yes @vscode/vsce@latest package --no-dependencies --allow-star-activation)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(curl -sI -L https://unpkg.com/force-graph)",
+      "Bash(git -C d:/dongmin ai company status)",
+      "Bash(git -C d:/dongmin ai company diff --stat)",
+      "Bash(git -C d:/dongmin ai company log --oneline -5)",
+      "Bash(git -C d:/dongmin ai company branch --show-current)",
+      "Bash(git -C d:/dongmin ai company remote -v)",
+      "Bash(git -C d:/dongmin ai company ls-files)",
+      "Bash(npx --yes @vscode/vsce package --no-dependencies --no-git-tag-version)",
+      "Bash(npx --yes @vscode/vsce package --no-dependencies --out connect-ai-lab-2.10.0.vsix)",
+      "Bash(git -C d:/dongmin ai company diff .claude/settings.json)",
+      "Bash(git -C d:/dongmin ai company diff package.json)",
+      "Bash(git -C d:/dongmin ai company ls-files -v)",
+      "Bash(git -C d:/dongmin ai company rev-parse HEAD)",
+      "Bash(npx --yes @vscode/vsce package --no-dependencies --allow-star-activation --out connect-ai-lab-2.10.2.vsix)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(grep -c '`' d:/dongmin ai company/assets/force-graph.min.js)",
+      "Bash(grep -o '\\\\${' d:/dongmin ai company/assets/force-graph.min.js)",
+      "Bash(npm list *)"
+    ],
+    "additionalDirectories": [
+      "d:/dongmin ai company"
+    ]
+  }
+}
