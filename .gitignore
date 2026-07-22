@@ -24,6 +24,11 @@ dist/
 *.zip
 *.Zip
 
+# Logs and debug files
+*.log
+paypal_debug.txt
+*.tmp
+
 # Python cache
 **/__pycache__/
 *.pyc
