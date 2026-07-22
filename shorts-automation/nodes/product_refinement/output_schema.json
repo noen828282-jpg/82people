@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProductRefinementOutput",
+  "type": "ARRAY",
+  "items": {
+    "type": "OBJECT",
+    "properties": {
+      "id": {
+        "type": [
+          "STRING",
+          "INTEGER"
+        ],
+        "description": "상품 고유 식별자"
+      },
+      "name": {
+        "type": "STRING",
+        "description": "상품명"
+      },
+      "url": {
+        "type": "STRING",
+        "format": "uri",
+        "description": "상품 원본 URL"
+      },
+      "category": {
+        "type": "STRING",
+        "description": "정제 및 분류된 상품 카테고리"
+      },
+      "price": {
+        "type": "INTEGER",
+        "minimum": 1,
+        "description": "상품 가격 (0원 초과)"
+      },
+      "description": {
+        "type": "STRING",
+        "minLength": 10,
+        "description": "상품 상세 설명 (최소 10자 이상)"
+      },
+      "images": {
+        "type": "ARRAY",
+        "items": {
+          "type": "STRING",
+          "format": "uri"
+        },
+        "minItems": 1,
+        "description": "상품 이미지 URL 목록 (최소 1개 이상)"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "url",
+      "category",
+      "price",
+      "description",
+      "images"
+    ]
+  }
+}

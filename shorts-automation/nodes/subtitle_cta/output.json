@@ -1,0 +1,111 @@
+{
+  "id": "hoya_concept_1783480713_1",
+  "name": "'회사 야근' 에디션: 간식 가방 지키는 천재 리트리버 호야",
+  "url": "https://www.youtube.com/@호야STUDIO",
+  "price": 0,
+  "rating": 5.0,
+  "review_count": 211,
+  "sourcing_method": "hoya_studio_concept",
+  "description": "주인이 간식 가방을 열어두고 자리를 비우자, 호야가 침 흘리면서도 의리를 지키며 가방을 지키는 1인칭 독백 상황극.",
+  "category": "vlog",
+  "score": 4.5,
+  "review_summary": {
+    "pros": [
+      "강아지의 귀여운 행동이 시청자에게 매력적임",
+      "1인칭 독백으로 재미있는 스토리텔링 가능"
+    ],
+    "cons": [
+      "리트리버의 행동을 잘 유도해야 함",
+      "촬영 및 편집에 시간과 노력이 필요할 수 있음"
+    ],
+    "overall": "호야의 귀여운 모습이 많은 사랑을 받을 가능성이 높음."
+  },
+  "script_data": {
+    "title": "'회사 야근' 에디션: 간식 가방 지키는 천재 리트리버 호야",
+    "narration": "안녕하세요, 여러분! 저는 호야예요! 오늘은 주인이 간식 가방을 열어두고 나가버렸어요. 아... 간식 냄새가 너무 좋아! 침이 줄줄 흐르지만, 나는 의리 있는 리트리버니까! 주인이 돌아올 때까지 절대 가방에 손 대면 안 돼요. 하지만... 이 냄새는 너무 유혹적이야! '호야, 너는 강한 개야!'라고 스스로 다짐해요. 아, 이건 마치 '간식 가방 지키기 대회' 같아요! 주인이 돌아올 때까지 버텨야 해! 하지만... 혹시 주인이 간식 하나 주면 안 될까요? 아하하!",
+    "bgm_mood": "귀엽고 경쾌한 멜로디로, 호야의 긴장감과 유머를 잘 살려주는 음악",
+    "sound_effects": [
+      "침 흘리는 소리",
+      "가방이 열리는 소리",
+      "주인이 돌아오는 발소리"
+    ]
+  },
+  "competitor_analysis": {
+    "patterns": [
+      "1인칭 강아지 독백 상황극",
+      "견공 시점의 유머러스한 해학"
+    ],
+    "benchmarks": [
+      {
+        "title": "[인기] '회사 야근' 에디션: 간식 가방 지키는 천재 리트리버 호야 - 강아지 진짜 속마음 대공개",
+        "views": 480000,
+        "hook_style": "1인칭 대사 후킹",
+        "visual_style": "강아지 눈높이 카메라 앵글, 갸웃거리는 클로즈업"
+      }
+    ]
+  },
+  "scene_briefs": [
+    {
+      "scene_number": 1,
+      "visual_description": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing tiny round black glasses, looking confused and tilting its head playfully. Set in a bright, modern, minimalist studio with soft pastel tones, cinematic warm lighting, clean composition, high detail, 8k resolution.",
+      "audio_direction": "호야의 깜짝 놀라는 표정에 효과음 배정. '어라? 내 밥그릇이 비어있네?' 내레이션.",
+      "duration_seconds": 3.0,
+      "image_path": "/nodes/assets/seola.jpg",
+      "image_prompt": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing tiny round black glasses, looking confused and tilting its head playfully. Set in a bright, modern, minimalist studio with soft pastel tones, cinematic warm lighting, clean composition, high detail, 8k resolution. --ar 9:16",
+      "video_prompt": "Slow dolly-in on Hoya's confused expression, with tail wagging and ears twitching. Glasses glinting in warm light. --ar 9:16"
+    },
+    {
+      "scene_number": 2,
+      "visual_description": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing a miniature blue collar with a tiny necktie, looking exhausted and sitting on a desk next to a laptop. Set in a warm-toned modern workspace studio background, soft volumetric indoor lighting, cinematic depth of field.",
+      "audio_direction": "코믹한 시계 째깍거리는 효과음. '대표님이 다이어트하라고 굶기는 게 학계의 정설인가...' 내레이션.",
+      "duration_seconds": 9.0,
+      "image_path": "/nodes/assets/jinsik.jpg",
+      "image_prompt": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing a miniature blue collar with a tiny necktie, looking exhausted and sitting on a desk next to a laptop. Set in a warm-toned modern workspace studio background, soft volumetric indoor lighting, cinematic depth of field. --ar 9:16",
+      "video_prompt": "Panning across Hoya sitting tiredly, with a slight head tilt and mouth moving as if sighing. Collar gently swaying. --ar 9:16"
+    },
+    {
+      "scene_number": 3,
+      "visual_description": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing a tiny yellow bandanna around its neck, sitting playfully on its hind legs and waving one front paw. Set in a bright studio background with soft golden hour natural sunlight filtering from a window, high detail, 8k resolution.",
+      "audio_direction": "경쾌하게 멍! 짖는 소리 효과음. '아래 구독 버튼 안 누르면 밥그릇 안 채워집니다!' 내레이션.",
+      "duration_seconds": 3.0,
+      "image_path": "/nodes/assets/byunggil.jpg",
+      "image_prompt": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing a tiny yellow bandanna around its neck, sitting playfully on its hind legs and waving one front paw. Set in a bright studio background with soft golden hour natural sunlight filtering from a window, high detail, 8k resolution. --ar 9:16",
+      "video_prompt": "Sliding shot of Hoya waving its paw playfully, with tail wagging and fur gently blowing in the sunlight. --ar 9:16"
+    }
+  ],
+  "script": {
+    "overall_script": "안녕하세요, 여러분! 저는 호야예요! 오늘은 주인이 간식 가방을 열어두고 나가버렸어요. 아... 간식 냄새가 너무 좋아! 침이 줄줄 흐르지만, 나는 의리 있는 리트리버니까! 주인이 돌아올 때까지 절대 가방에 손 대면 안 돼요. 하지만... 이 냄새는 너무 유혹적이야! '호야, 너는 강한 개야!'라고 스스로 다짐해요. 아, 이건 마치 '간식 가방 지키기 대회' 같아요! 주인이 돌아올 때까지 버텨야 해! 하지만... 혹시 주인이 간식 하나 주면 안 될까요? 아하하!",
+    "scenes_script": [
+      {
+        "scene_number": 1,
+        "narration": "호야의 깜짝 놀라는 표정에 효과음 배정. '어라? 내 밥그릇이 비어있네?' 내레이션."
+      },
+      {
+        "scene_number": 2,
+        "narration": "코믹한 시계 째깍거리는 효과음. '대표님이 다이어트하라고 굶기는 게 학계의 정설인가...' 내레이션."
+      },
+      {
+        "scene_number": 3,
+        "narration": "경쾌하게 멍! 짖는 소리 효과음. '아래 구독 버튼 안 누르면 밥그릇 안 채워집니다!' 내레이션."
+      }
+    ]
+  },
+  "media_prompts": [
+    {
+      "scene_number": 1,
+      "image_prompt": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing tiny round black glasses, looking confused and tilting its head playfully. Set in a bright, modern, minimalist studio with soft pastel tones, cinematic warm lighting, clean composition, high detail, 8k resolution. --ar 9:16",
+      "video_prompt": "Slow dolly-in on Hoya's confused expression, with tail wagging and ears twitching. Glasses glinting in warm light. --ar 9:16"
+    },
+    {
+      "scene_number": 2,
+      "image_prompt": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing a miniature blue collar with a tiny necktie, looking exhausted and sitting on a desk next to a laptop. Set in a warm-toned modern workspace studio background, soft volumetric indoor lighting, cinematic depth of field. --ar 9:16",
+      "video_prompt": "Panning across Hoya sitting tiredly, with a slight head tilt and mouth moving as if sighing. Collar gently swaying. --ar 9:16"
+    },
+    {
+      "scene_number": 3,
+      "image_prompt": "A tiny baby white Pomeranian, extremely fluffy cloud-like white fur, large round jet-black eyes, a tiny round black nose, a very short snout, small triangular ears, and a bright cheerful smile showing a small pink tongue. Wearing a tiny yellow bandanna around its neck, sitting playfully on its hind legs and waving one front paw. Set in a bright studio background with soft golden hour natural sunlight filtering from a window, high detail, 8k resolution. --ar 9:16",
+      "video_prompt": "Sliding shot of Hoya waving its paw playfully, with tail wagging and fur gently blowing in the sunlight. --ar 9:16"
+    }
+  ],
+  "final_video": "nodes/upload_package/final_video.mp4"
+}

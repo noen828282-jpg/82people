@@ -9,17 +9,34 @@ config:
 
 각 템플릿은 검증된 공식 명령어로 셋업. 5분 안에 dev server 띄울 수 있는 상태로.
 """
-import os, sys, json, subprocess, shutil
+import os
+import sys
+import json
+import subprocess
+import shutil
 
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.path.join(HERE, "web_init.json")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "💻", "ok": "✅", "warn": "⚠️ ", "err": "❌", "step": "▸"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
-
 
 def _load():
     if os.path.exists(CONFIG):
@@ -30,7 +47,6 @@ def _load():
             pass
     return {}
 
-
 def _save(c):
     try:
         with open(CONFIG, "w", encoding="utf-8") as f:
@@ -38,11 +54,9 @@ def _save(c):
     except Exception:
         pass
 
-
 def _check_cmd(cmd):
     """Check if a CLI tool exists."""
     return shutil.which(cmd) is not None
-
 
 def _run(cmd, cwd=None, capture=True):
     """Run shell command, stream stderr live but capture stdout for return."""
@@ -59,7 +73,6 @@ def _run(cmd, cwd=None, capture=True):
     else:
         return subprocess.run(cmd, shell=True, cwd=cwd, timeout=600).returncode == 0, ""
 
-
 def _scaffold_vite_react(name, parent):
     """Vite + React + TS + Tailwind v4 (Vite 플러그인 방식).
     v2: tailwindcss init 명령이 v4에서 제거됨 → @tailwindcss/vite 플러그인 사용 + 설정 파일 직접 쓰기.
@@ -71,7 +84,6 @@ def _scaffold_vite_react(name, parent):
         ("tailwind-pkg", "npm install tailwindcss@^4 @tailwindcss/vite@^4", target, False),
         ("tailwind-config", _write_vite_tailwind_config, target, False),
     ]
-
 
 def _write_vite_tailwind_config(target):
     """Tailwind v4 설정 파일 직접 작성 (init 명령 의존 없음)."""
@@ -104,7 +116,6 @@ def _write_vite_tailwind_config(target):
             pass
 
     return True
-
 
 TEMPLATES = {
     "vite-react": {
@@ -147,10 +158,9 @@ TEMPLATES = {
         "needs": [],
         "scaffold": "VANILLA",  # 특수 케이스 — 직접 파일 생성
         "post": "단일 폴더 + index.html + style.css + script.js + README",
-        "dev_cmd": "python3 -m http.server 8000",
+        "dev_cmd": "python -m http.server 8000" if sys.platform.startswith("win") else "python3 -m http.server 8000",
     },
 }
-
 
 def _scaffold_vanilla(target_dir, name):
     """프레임워크 없이 정적 사이트 시드."""
@@ -191,7 +201,7 @@ Connect AI 코다리가 셋업한 정적 웹사이트.
 
 ## 미리보기
 ```
-python3 -m http.server 8000
+{"python" if sys.platform.startswith("win") else "python3"} -m http.server 8000
 ```
 그 다음 브라우저에서 http://localhost:8000
 
@@ -206,11 +216,17 @@ python3 -m http.server 8000
 - Cloudflare Pages: GitHub 연결
 ''',
     }
+    target_dir = os.path.abspath(os.path.expanduser(target_dir))
+    base_dir = os.path.abspath(os.path.expanduser("~"))
     for filename, content in files.items():
-        with open(os.path.join(target_dir, filename), "w", encoding="utf-8") as f:
+        file_path = os.path.abspath(os.path.join(target_dir, filename))
+        if not file_path.startswith(target_dir):
+            raise PermissionError("Path traversal detected")
+        if not file_path.startswith(base_dir) and not file_path.startswith("D:\\") and not file_path.startswith("C:\\"):
+            raise PermissionError("Access denied: Invalid path")
+        with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
     return True
-
 
 def main():
     cfg = _load()
@@ -232,10 +248,19 @@ def main():
     # 출력 위치
     if not out_dir:
         out_dir = os.path.expanduser("~/connect-ai-projects")
-    out_dir = os.path.expanduser(out_dir)
+    out_dir = os.path.abspath(os.path.expanduser(out_dir))
+
+    # Path traversal validation (CWE-22 / CWE-538)
+    base_dir = os.path.abspath(os.path.expanduser("~"))
+    if not out_dir.startswith(base_dir) and not out_dir.startswith("D:\\") and not out_dir.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid output directory path")
+
     os.makedirs(out_dir, exist_ok=True)
 
-    target = os.path.join(out_dir, name)
+    target = os.path.abspath(os.path.join(out_dir, name))
+    if not target.startswith(out_dir):
+        raise PermissionError("Access denied: Path traversal detected")
+
     if os.path.exists(target):
         _log(f"이미 존재: {target} — 다른 이름 쓰거나 폴더 지우세요", "err")
         sys.exit(1)
@@ -301,7 +326,6 @@ def main():
     print()
     print(f"PROJECT_PATH={target}")
     print(f"DEV_CMD={spec['dev_cmd']}")
-
 
 if __name__ == "__main__":
     main()

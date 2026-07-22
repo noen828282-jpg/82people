@@ -1,0 +1,14 @@
+{
+  "name": "dongmin-ai-company-image-factory",
+  "version": "1.0.0",
+  "description": "GPT Image 2.0 (DALL-E 3) API character generator for dongmin ai company",
+  "main": "generate_character_images.js",
+  "scripts": {
+    "install-deps": "npm install",
+    "generate": "node generate_character_images.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "openai": "^4.28.3"
+  }
+}

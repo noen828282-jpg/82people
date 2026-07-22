@@ -13,18 +13,37 @@ config:
   - 첫 5초 동안 출력에서 localhost URL 파싱
   - 같은 프로젝트 재실행 시 이전 PID 자동 종료
 """
-import os, sys, json, subprocess, time, signal, re
+import os
+import sys
+import json
+import subprocess
+import time
+import signal
+import re
 
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.path.join(HERE, "web_preview.json")
 WEB_INIT_CONFIG = os.path.join(HERE, "web_init.json")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "💻", "ok": "✅", "warn": "⚠️ ", "err": "❌", "step": "▸"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
-
 
 def _load(p):
     if os.path.exists(p):
@@ -35,7 +54,6 @@ def _load(p):
             pass
     return {}
 
-
 def _save(p, c):
     try:
         with open(p, "w", encoding="utf-8") as f:
@@ -43,10 +61,15 @@ def _save(p, c):
     except Exception:
         pass
 
-
 def _detect_dev_command(project_path):
     """package.json의 scripts.dev 또는 start를 감지."""
-    pkg = os.path.join(project_path, "package.json")
+    project_path = os.path.abspath(project_path)
+    pkg = os.path.abspath(os.path.join(project_path, "package.json"))
+    if not pkg.startswith(project_path):
+        raise PermissionError("Path traversal detected")
+    base_dir = os.path.abspath(os.path.expanduser("~"))
+    if not pkg.startswith(base_dir) and not pkg.startswith("D:\\") and not pkg.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid path")
     if not os.path.exists(pkg):
         return None
     try:
@@ -60,9 +83,15 @@ def _detect_dev_command(project_path):
         pass
     return None
 
-
-def _kill_old_pid(pid_file):
+def _kill_old_pid(project_path, pid_file):
     """이전 실행이 있으면 종료."""
+    project_path = os.path.abspath(project_path)
+    pid_file = os.path.abspath(pid_file)
+    if not pid_file.startswith(project_path):
+        raise PermissionError("Path traversal detected")
+    base_dir = os.path.abspath(os.path.expanduser("~"))
+    if not pid_file.startswith(base_dir) and not pid_file.startswith("D:\\") and not pid_file.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid path")
     if not os.path.exists(pid_file):
         return
     try:
@@ -84,7 +113,6 @@ def _kill_old_pid(pid_file):
     except Exception:
         pass
 
-
 def main():
     cfg = _load(CONFIG)
     init_cfg = _load(WEB_INIT_CONFIG)
@@ -97,7 +125,13 @@ def main():
         _log("PROJECT_PATH가 비어있고 web_init 기록도 없음. 프로젝트 경로 지정하세요.", "err")
         sys.exit(1)
 
-    project_path = os.path.expanduser(project_path)
+    project_path = os.path.abspath(os.path.expanduser(project_path))
+
+    # Path traversal validation (CWE-22 / CWE-538)
+    base_dir = os.path.abspath(os.path.expanduser("~"))
+    if not project_path.startswith(base_dir) and not project_path.startswith("D:\\") and not project_path.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid project path")
+
     if not os.path.isdir(project_path):
         _log(f"폴더 없음: {project_path}", "err")
         sys.exit(1)
@@ -113,12 +147,21 @@ def main():
     _log(f"명령: {dev_cmd}", "info")
 
     # PID 파일
-    pid_file = os.path.join(project_path, ".connect-ai-dev.pid")
-    log_file = os.path.join(project_path, ".connect-ai-dev.log")
-    _kill_old_pid(pid_file)
+    pid_file = os.path.abspath(os.path.join(project_path, ".connect-ai-dev.pid"))
+    log_file = os.path.abspath(os.path.join(project_path, ".connect-ai-dev.log"))
+    if not pid_file.startswith(project_path) or not log_file.startswith(project_path):
+        raise PermissionError("Path traversal detected")
+    base_dir = os.path.abspath(os.path.expanduser("~"))
+    if not pid_file.startswith(base_dir) and not pid_file.startswith("D:\\") and not pid_file.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid path")
+    if not log_file.startswith(base_dir) and not log_file.startswith("D:\\") and not log_file.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid path")
+    _kill_old_pid(project_path, pid_file)
 
     # 백그라운드 실행
     try:
+        if not log_file.startswith(base_dir) and not log_file.startswith("D:\\") and not log_file.startswith("C:\\"):
+            raise PermissionError("Access denied: Invalid path")
         with open(log_file, "w") as logf:
             if sys.platform == "win32":
                 proc = subprocess.Popen(
@@ -132,6 +175,8 @@ def main():
                     stdout=logf, stderr=subprocess.STDOUT,
                     start_new_session=True,
                 )
+        if not pid_file.startswith(base_dir) and not pid_file.startswith("D:\\") and not pid_file.startswith("C:\\"):
+            raise PermissionError("Access denied: Invalid path")
         with open(pid_file, "w") as f:
             f.write(str(proc.pid))
         _log(f"dev server 시작됨 (PID {proc.pid})", "ok")
@@ -145,6 +190,8 @@ def main():
     while time.time() < deadline:
         time.sleep(0.5)
         try:
+            if not log_file.startswith(base_dir) and not log_file.startswith("D:\\") and not log_file.startswith("C:\\"):
+                raise PermissionError("Access denied: Invalid path")
             with open(log_file, "r") as f:
                 content = f.read()
             # 흔한 패턴: "Local:   http://localhost:3000" / "ready - started server on http://localhost:3000"
@@ -157,6 +204,8 @@ def main():
         if proc.poll() is not None:
             _log("dev server가 일찍 종료됐어요. 로그 확인:", "warn")
             try:
+                if not log_file.startswith(base_dir) and not log_file.startswith("D:\\") and not log_file.startswith("C:\\"):
+                    raise PermissionError("Access denied: Invalid path")
                 with open(log_file, "r") as f:
                     for line in f.read().splitlines()[-10:]:
                         print(f"  {line}")
@@ -169,6 +218,8 @@ def main():
     else:
         _log("URL을 자동 감지 못 함. 로그 확인:", "warn")
         try:
+            if not log_file.startswith(base_dir) and not log_file.startswith("D:\\") and not log_file.startswith("C:\\"):
+                raise PermissionError("Access denied: Invalid path")
             with open(log_file, "r") as f:
                 for line in f.read().splitlines()[-15:]:
                     print(f"  {line}")
@@ -203,7 +254,6 @@ def main():
     print()
     _log("dev server는 백그라운드에서 계속 실행됩니다.", "info")
     _log(f"종료: kill {proc.pid}  (또는 같은 도구 재실행)", "info")
-
 
 if __name__ == "__main__":
     main()

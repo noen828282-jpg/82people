@@ -17,6 +17,13 @@ assets/pixel/
 # Agent Run Session Logs
 _company/sessions/
 
+# Build outputs and heavy binaries
+dist/
+**/dist/
+*.exe
+*.zip
+*.Zip
+
 # Python cache
 **/__pycache__/
 *.pyc

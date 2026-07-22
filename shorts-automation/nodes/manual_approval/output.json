@@ -1,0 +1,286 @@
+{
+  "id": "pad_001",
+  "name": "프리미엄 펠트 데스크 매트 L",
+  "url": "https://example.com/products/felt-desk-mat",
+  "category": "desk-accessory",
+  "price": 24900,
+  "description": "따뜻하고 고급스러운 느낌의 양모 펠트 데스크 매트. 논슬립 패드로 밀림 방지.",
+  "images": [
+    "https://example.com/images/felt-mat-1.jpg"
+  ],
+  "score": 3.95,
+  "review_summary": {
+    "pros": [
+      "리뷰 데이터 없음"
+    ],
+    "cons": [
+      "리뷰 데이터 없음"
+    ],
+    "overall": "리뷰 데이터가 부재하여 감성 분석을 진행할 수 없습니다."
+  },
+  "risk": false,
+  "reason": "통과 (특이 리스크 키워드 없음)",
+  "affiliate_url": "https://link.coupang.com/re/AFFSD?lptag=AF12345&pageKey=pad_001",
+  "disclosure": "본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+  "competitor_analysis": {
+    "patterns": [
+      "데스크 매트의 다양한 활용법을 보여주는 짧은 팁 영상",
+      "프리미엄 펠트 데스크 매트의 질감과 디자인을 강조하는 언박싱 영상",
+      "데스크 환경을 변화시키는 전후 비교 영상"
+    ],
+    "benchmarks": [
+      {
+        "title": "프리미엄 펠트 데스크 매트로 사무실 분위기 바꾸기!",
+        "views": 250000,
+        "hook_style": "시작부터 매트의 질감을 강조하며, '이 매트 하나로 사무실이 이렇게 변할 수 있다!'라는 질문으로 시청자의 호기심을 자극",
+        "visual_style": "매트의 질감을 클로즈업으로 보여주고, 데스크 위에서 다양한 소품과 함께 배치하는 장면을 빠르게 전환"
+      },
+      {
+        "title": "이 데스크 매트, 진짜 필요할까? 사용 후기 공개!",
+        "views": 400000,
+        "hook_style": "첫 3초에 '이 매트가 없었다면?'이라는 질문으로 시작하여, 사용 전후의 차이를 보여주는 빠른 전개",
+        "visual_style": "매트 사용 전후의 데스크를 비교하는 장면을 스플릿 스크린으로 보여주고, 사용 중의 다양한 각도에서 촬영"
+      }
+    ]
+  },
+  "scene_briefs": [
+    {
+      "scene_number": 1,
+      "visual_description": "손이 매트 위에서 물건을 찾는 클로즈업 장면",
+      "audio_direction": "불편함을 표현하는 내레이션, 긴장감 있는 배경음악",
+      "duration_seconds": 3.0
+    },
+    {
+      "scene_number": 2,
+      "visual_description": "매트의 질감과 색상을 부드럽게 보여주는 팬 장면",
+      "audio_direction": "매트의 고급스러움을 강조하는 내레이션, 잔잔한 음악",
+      "duration_seconds": 9.0
+    },
+    {
+      "scene_number": 3,
+      "visual_description": "깔끔한 데스크 세팅과 가격 텍스트 오버레이",
+      "audio_direction": "구매 유도 문구, 경쾌한 배경음악",
+      "duration_seconds": 3.0
+    }
+  ],
+  "script": {
+    "overall_script": "아직도 밀리는 매트 쓰세요? 분위기 180도 역전! 이 퀄리티, 사기임. 좌표는 첫댓글 확인!",
+    "scenes_script": [
+      {
+        "scene_number": 1,
+        "narration": "아직도 밀리는 매트 쓰세요?"
+      },
+      {
+        "scene_number": 2,
+        "narration": "분위기 180도 역전! 밀어봐도 꿈쩍도 안 해."
+      },
+      {
+        "scene_number": 3,
+        "narration": "이 퀄리티, 사기임. 좌표는 첫댓글 확인!"
+      }
+    ]
+  },
+  "media_prompts": [
+    {
+      "scene_number": 1,
+      "image_prompt": "A cozy modern Korean desk setup featuring a premium wool felt desk mat in warm beige tones. The scene captures a close-up of a hand gently searching for items on the mat, with soft warm shadows and natural sunlight filtering through vertical blinds, creating volumetric light rays. The background showcases a clean K-interior with a neutral color palette of warm oak and charcoal gray. Shot on 35mm lens, f/1.8, shallow depth of field, soft warm bokeh, highly detailed, photorealistic.",
+      "video_prompt": "A slow cinematic dolly-in focusing on a hand delicately exploring the texture of a premium wool felt desk mat. The camera captures floating dust motes in sunbeams, with natural light shifting across the wooden desk surface. The scene emphasizes cinematic realism with volumetric light rays, highly detailed K-lifestyle commercial style, shot on 35mm lens, f/1.8, soft warm bokeh, 8k."
+    },
+    {
+      "scene_number": 2,
+      "image_prompt": "A serene view of a premium wool felt desk mat showcasing its luxurious texture and warm color palette. The scene is bathed in soft, warm lighting with natural sunlight streaming through vertical blinds, casting gentle shadows. The background features a minimalist Korean desk setup with elements of modern design in warm oak and charcoal gray. Shot on 35mm lens, f/1.8, shallow depth of field, soft warm bokeh, highly detailed, photorealistic.",
+      "video_prompt": "A smooth tracking pan that highlights the luxurious texture and color of the premium wool felt desk mat. The camera captures the gentle movement of natural light shifting across the mat, with a gentle breeze swaying nearby plant leaves. The scene is rich in cinematic realism, featuring volumetric light rays, highly detailed K-lifestyle commercial style, shot on 35mm lens, f/1.8, soft warm bokeh, 8k."
+    },
+    {
+      "scene_number": 3,
+      "image_prompt": "A clean and organized modern Korean desk setup featuring a premium wool felt desk mat. The scene showcases a minimalist aesthetic with a neutral color palette of warm oak and charcoal gray, illuminated by soft warm lighting. The desk is devoid of any text or clutter, emphasizing the elegance of the setup. Shot on 35mm lens, f/1.8, shallow depth of field, soft warm bokeh, highly detailed, photorealistic.",
+      "video_prompt": "A close-up soft-focus slide revealing the pristine desk setup with the premium wool felt desk mat. The camera captures the gentle play of light across the desk, highlighting the textures and colors without any distractions. The scene embodies cinematic realism with volumetric light rays, highly detailed K-lifestyle commercial style, shot on 35mm lens, f/1.8, soft warm bokeh, 8k."
+    }
+  ],
+  "media_assets": {
+    "images": [
+      {
+        "scene_number": 1,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene1.png"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene2.png"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene3.png"
+      }
+    ],
+    "videos": [
+      {
+        "scene_number": 1,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene1.mp4"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene2.mp4"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene3.mp4"
+      }
+    ]
+  },
+  "inspection_passed": false,
+  "ai_inspection_report": {
+    "ai_inspection_passed": false,
+    "visual_audio_match_score": 3.5,
+    "alignment_feedback": "비주얼과 오디오의 조화가 부족합니다.",
+    "improvement_suggestions": "내레이션과 시각적 요소를 더 일치시켜야 합니다."
+  },
+  "media_inspection_details": {
+    "videos": [
+      {
+        "scene_number": 1,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene1.mp4",
+        "file_exists": true,
+        "file_size_bytes": 1346565,
+        "resolution": "1080x1920",
+        "resolution_ok": true,
+        "duration_seconds": 3.0,
+        "duration_ok": true,
+        "passed": true,
+        "notes": "비디오 검수 통과"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene2.mp4",
+        "file_exists": true,
+        "file_size_bytes": 2308622,
+        "resolution": "1080x1920",
+        "resolution_ok": true,
+        "duration_seconds": 9.0,
+        "duration_ok": true,
+        "passed": true,
+        "notes": "비디오 검수 통과"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene3.mp4",
+        "file_exists": true,
+        "file_size_bytes": 1707979,
+        "resolution": "1080x1920",
+        "resolution_ok": true,
+        "duration_seconds": 3.0,
+        "duration_ok": true,
+        "passed": true,
+        "notes": "비디오 검수 통과"
+      }
+    ],
+    "images": [
+      {
+        "scene_number": 1,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene1.png",
+        "file_exists": true,
+        "file_size_bytes": 2263748,
+        "resolution": "1080x1920",
+        "resolution_ok": true,
+        "passed": true,
+        "notes": "이미지 검수 통과"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene2.png",
+        "file_exists": true,
+        "file_size_bytes": 2807852,
+        "resolution": "1080x1920",
+        "resolution_ok": true,
+        "passed": true,
+        "notes": "이미지 검수 통과"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene3.png",
+        "file_exists": true,
+        "file_size_bytes": 2220781,
+        "resolution": "1080x1920",
+        "resolution_ok": true,
+        "passed": true,
+        "notes": "이미지 검수 통과"
+      }
+    ]
+  },
+  "subtitle_file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001.srt",
+  "cta_overlay": {
+    "disclosure_banner": {
+      "text": "본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+      "position_y_percent": 85,
+      "font_size_px": 24,
+      "background_color": "rgba(0,0,0,0.6)",
+      "font_color": "#ffffff",
+      "display_mode": "always_visible"
+    },
+    "recommended_cta_copies": [
+      "이 매트로 분위기 UP! 좌표👇",
+      "품질 실화? 첫댓글에서 확인✨",
+      "따뜻한 감성, 링크는 여기📦"
+    ],
+    "selected_cta_text": "이 매트로 분위기 UP! 좌표👇",
+    "arrow_animation": {
+      "scene_number": 3,
+      "position_x_percent": 80,
+      "position_y_percent": 70,
+      "animation_type": "bouncing",
+      "start_seconds": 12.0,
+      "end_seconds": 15.0,
+      "target_element": "comment_link"
+    }
+  },
+  "final_video_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_final.mp4",
+  "package_dir": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package",
+  "manifest_file": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\manifest.json",
+  "upload_package": {
+    "prod_id": "pad_001",
+    "title": "고급스러운 펠트 데스크 매트 소개!",
+    "title_suggestions": [
+      "고급스러운 펠트 데스크 매트 소개!",
+      "따뜻한 느낌의 데스크 매트 추천",
+      "논슬립 펠트 매트로 책상 꾸미기"
+    ],
+    "description": "따뜻하고 고급스러운 느낌의 양모 펠트 데스크 매트를 소개합니다. 이 매트는 논슬립 패드로 밀림을 방지하여 안정적인 사용이 가능합니다. 지금 바로 구매하고 싶다면 아래 링크를 확인해보세요! [구매 링크](https://link.coupang.com/re/AFFSD?lptag=AF12345&pageKey=pad_001) \n\n본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+    "tags": [
+      "펠트 매트",
+      "데스크 액세서리",
+      "고급스러운 책상",
+      "논슬립 패드",
+      "인테리어 소품",
+      "프리미엄 제품",
+      "책상 꾸미기"
+    ],
+    "video_files": [
+      "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001_scene1.mp4",
+      "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001_scene2.mp4",
+      "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001_scene3.mp4"
+    ],
+    "subtitle_file": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001.srt",
+    "youtube_metadata": {
+      "categoryId": "28",
+      "privacyStatus": "public",
+      "selfDeclaredMadeForKids": false,
+      "title": "고급스러운 펠트 데스크 매트 소개!",
+      "description": "따뜻하고 고급스러운 느낌의 양모 펠트 데스크 매트를 소개합니다. 이 매트는 논슬립 패드로 밀림을 방지하여 안정적인 사용이 가능합니다. 지금 바로 구매하고 싶다면 아래 링크를 확인해보세요! [구매 링크](https://link.coupang.com/re/AFFSD?lptag=AF12345&pageKey=pad_001) \n\n본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+      "tags": [
+        "펠트 매트",
+        "데스크 액세서리",
+        "고급스러운 책상",
+        "논슬립 패드",
+        "인테리어 소품",
+        "프리미엄 제품",
+        "책상 꾸미기"
+      ]
+    }
+  },
+  "approval_status": {
+    "approved": true,
+    "reviewer": "admin",
+    "comment": "자동화 모듈에 의한 자동 승인 통과",
+    "approved_at": "2026-07-01T07:14:02Z",
+    "next_action": "publish"
+  }
+}

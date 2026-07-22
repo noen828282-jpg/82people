@@ -20,7 +20,28 @@ medium/large 쓰고 싶으면 MODEL 필드에 직접 지정.
 
 ⚙️ MODEL 필드를 위 5개 중 하나로 설정. 설치는 한 번에 한 모델만 (선택한 거).
 """
-import os, sys, json, subprocess, shutil, time
+
+import sys
+import os, json, subprocess, shutil, time
+import os
+import logging, warnings
+from transformers import MusicgenForConditionalGeneration, AutoProcessor
+
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(HERE, "music_studio_setup.json")
@@ -61,15 +82,12 @@ MODELS = {
 
 DEFAULT_INSTALL_DIR = os.path.expanduser("~/connect-ai-music")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "🔧", "ok": "✅", "warn": "⚠️ ", "err": "❌"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
 
-
 def _which(cmd):
     return shutil.which(cmd) is not None
-
 
 def _system_ram_gb():
     """Detect system RAM. Cross-platform best effort."""
@@ -91,7 +109,6 @@ def _system_ram_gb():
         pass
     return 16  # 보수적 default
 
-
 def _recommend_model(ram_gb):
     """RAM 기반 추천 모델. v2.89.78 — 보수적으로 small 우선.
     추론할 때 모델 weight + activation + scratch buffer 합쳐서 명시 RAM의 1.5~2배
@@ -99,7 +116,6 @@ def _recommend_model(ram_gb):
     VS Code 띄운 상태면 medium 추론 중 swap 폭발. small이 모든 환경에서 안정적이고
     품질도 충분. 사용자가 원하면 MODEL 필드로 직접 medium/large 선택."""
     return "musicgen-small"
-
 
 def _run(cmd, cwd=None):
     _log(f"$ {' '.join(cmd) if isinstance(cmd, list) else cmd}")
@@ -118,7 +134,6 @@ def _run(cmd, cwd=None):
         _log(f"실행 오류: {e}", "err")
         return False
 
-
 def _load_config():
     if os.path.exists(CONFIG_PATH):
         try:
@@ -128,11 +143,9 @@ def _load_config():
             pass
     return {}
 
-
 def _save_config(cfg):
     with open(CONFIG_PATH, "w", encoding="utf-8") as f:
         json.dump(cfg, f, ensure_ascii=False, indent=2)
-
 
 def _install_transformers_model(model_key, install_dir):
     """MusicGen 류 — pip + huggingface 다운로드. 가벼운 경로."""
@@ -142,7 +155,8 @@ def _install_transformers_model(model_key, install_dir):
     # venv 생성
     if not os.path.isdir(venv):
         _log("Python venv 생성...")
-        if not _run(["python3", "-m", "venv", venv]):
+        py_cmd = "python" if sys.platform.startswith("win") else "python3"
+        if not _run([py_cmd, "-m", "venv", venv]):
             return False, "venv 생성 실패"
 
     venv_pip = os.path.join(venv, "bin", "pip")
@@ -161,15 +175,12 @@ def _install_transformers_model(model_key, install_dir):
     # "decoder.model.decoder.embed_positions.weights | UNEXPECTED" 같은 내부 로그 노출돼 혼란.
     _log(f"모델 다운로드 중: {info['hf_id']} ({info['disk_gb']}GB)...")
     download_script = f"""
-import os
 os.environ['TRANSFORMERS_VERBOSITY'] = 'error'
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = '1'
-import logging, warnings
 logging.getLogger('transformers').setLevel(logging.ERROR)
 logging.getLogger('huggingface_hub').setLevel(logging.WARNING)
 warnings.filterwarnings('ignore')
 print('🔧 라이브러리 로드 중...', flush=True)
-from transformers import MusicgenForConditionalGeneration, AutoProcessor
 print('🔧 토크나이저/프로세서 다운로드 중...', flush=True)
 AutoProcessor.from_pretrained('{info['hf_id']}')
 print('🔧 모델 weight 다운로드 중 (대용량, 시간 걸림)...', flush=True)
@@ -180,7 +191,6 @@ print('✅ 모델 다운로드·로드 검증 완료')
         return False, "모델 다운로드 실패 — 인터넷 연결 확인"
 
     return True, venv_python
-
 
 def _install_acestep(model_key, install_dir):
     """ACE-Step — git clone + 큰 의존성. 무거운 경로."""
@@ -195,7 +205,8 @@ def _install_acestep(model_key, install_dir):
     venv = os.path.join(repo_dir, ".venv")
     if not os.path.isdir(venv):
         _log("Python venv 생성...")
-        if not _run(["python3", "-m", "venv", venv]):
+        py_cmd = "python" if sys.platform.startswith("win") else "python3"
+        if not _run([py_cmd, "-m", "venv", venv]):
             return False, "venv 생성 실패"
 
     venv_pip = os.path.join(venv, "bin", "pip")
@@ -214,14 +225,14 @@ def _install_acestep(model_key, install_dir):
     _log(f"모델 weight (~{info['disk_gb']}GB) 는 첫 음악 생성 때 자동 다운로드", "info")
     return True, venv_python
 
-
 def main():
     cfg = _load_config()
 
     # 기본 의존성
     missing = []
-    if not _which("python3"):
-        missing.append("python3 (https://www.python.org/downloads/)")
+    py_cmd = "python" if sys.platform.startswith("win") else "python3"
+    if not _which(py_cmd):
+        missing.append(f"{py_cmd} (https://www.python.org/downloads/)")
     if not _which("git"):
         missing.append("git (https://git-scm.com/downloads)")
     if missing:
@@ -297,7 +308,6 @@ def main():
     print()
     print(f"💡 위 로그에 'WARNING / UNEXPECTED' 보였어도 무시해도 됩니다 —")
     print(f"   transformers 라이브러리 내부 메시지. 설치는 정상 완료.")
-
 
 if __name__ == "__main__":
     main()

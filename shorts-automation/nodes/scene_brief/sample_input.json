@@ -1,0 +1,43 @@
+{
+  "id": "kb_001",
+  "name": "MX Keys Mini 무선 기계식 키보드",
+  "url": "https://example.com/products/mx-keys-mini",
+  "category": "keyboard",
+  "price": 139000,
+  "description": "콤팩트한 텐키리스 디자인의 무선 기계식 키보드. 스마트 백라이트와 이지스위치 탑재.",
+  "images": [
+    "https://example.com/images/mx-keys-mini-1.jpg"
+  ],
+  "reviews": [
+    "키감이 아주 쫀득하고 칠 때 기분이 좋습니다."
+  ],
+  "score": 4.55,
+  "review_summary": {
+    "pros": [
+      "키감이 쫀득하고 칠 때 기분이 좋습니다."
+    ],
+    "cons": [
+      "특이 단점 발견되지 않음"
+    ],
+    "overall": "키감이 쫀득하고 칠 때 기분이 좋습니다."
+  },
+  "risk": false,
+  "reason": "통과 (특이 리스크 키워드 없음)",
+  "affiliate_url": "https://link.coupang.com/re/AFFSD?lptag=AF12345&pageKey=kb_001",
+  "disclosure": "본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+  "competitor_analysis": {
+    "patterns": [
+      "ASMR 감성 타건",
+      "문제 제기형 후킹",
+      "데스크테리어 셋업 시연"
+    ],
+    "benchmarks": [
+      {
+        "title": "서재 책상 분위기 180도 바꾸는 사기템 키보드 3종",
+        "views": 450000,
+        "hook_style": "직관적 비교형 (3종 제품 비교 및 책상 정리 후킹)",
+        "visual_style": "데스크테리어 실사 레이아웃, 조명 강조"
+      }
+    ]
+  }
+}

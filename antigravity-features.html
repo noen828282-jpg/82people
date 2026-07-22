@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anti-Gravity 기능 레퍼런스</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0f0a;
+      --bg2: #0f1a0f;
+      --card: #131f13;
+      --card2: #192419;
+      --border: #2a3d2a;
+      --g1: #34d399;   /* google green */
+      --g2: #6ee7b7;
+      --b1: #60a5fa;   /* google blue */
+      --b2: #93c5fd;
+      --r1: #f87171;   /* google red */
+      --y1: #fbbf24;   /* google yellow */
+      --p1: #a78bfa;   /* purple */
+      --text: #d1f0d1;
+      --muted: #6b8c6b;
+      --white: #f0fff0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Google Sans', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .header {
+      padding: 48px 32px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+    }
+
+    .header h1 { font-size: 1.5rem; font-weight: 800; color: var(--white); }
+    .header-sub { font-size: 0.88rem; color: var(--muted); margin-left: 50px; }
+
+    .header-meta {
+      display: flex;
+      gap: 12px;
+      margin-left: 50px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .meta-chip.live {
+      border-color: rgba(52,211,153,0.4);
+      color: var(--g1);
+      background: rgba(52,211,153,0.08);
+    }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 32px; }
+
+    /* RANK LABEL */
+    .rank-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      margin-top: 48px;
+    }
+    .rank-label:first-child { margin-top: 0; }
+
+    .rank-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--card2);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .rank-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* GRID */
+    .feature-row { display: grid; gap: 16px; margin-bottom: 16px; }
+    .feature-row.cols-1 { grid-template-columns: 1fr; }
+    .feature-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .feature-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    @media (max-width: 760px) {
+      .feature-row.cols-2,
+      .feature-row.cols-3 { grid-template-columns: 1fr; }
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card.c-green:hover  { border-color: var(--g1); }
+    .card.c-blue:hover   { border-color: var(--b1); }
+    .card.c-red:hover    { border-color: var(--r1); }
+    .card.c-yellow:hover { border-color: var(--y1); }
+    .card.c-purple:hover { border-color: var(--p1); }
+
+    .badge-hot {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 3px 8px; border-radius: 100px;
+      background: rgba(239,68,68,0.18); color: #f87171;
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+    .badge-google {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 3px 8px; border-radius: 100px;
+      background: rgba(66,133,244,0.18); color: #60a5fa;
+      border: 1px solid rgba(66,133,244,0.3);
+    }
+
+    .card-icon { font-size: 26px; margin-bottom: 12px; display: block; }
+    .card h2 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .card > p { font-size: 0.855rem; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+
+    /* USE LIST */
+    .use-list { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .use-list li { font-size: 0.82rem; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .use-list li .arrow { color: var(--muted); flex-shrink: 0; }
+
+    /* CODE BLOCK */
+    .code-ex {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .code-ex .kw  { color: #86efac; }
+    .code-ex .cmd { color: #93c5fd; }
+    .code-ex .arg { color: #fde68a; }
+    .code-ex .cmt { color: #3d5c3d; }
+    .code-ex .url { color: #6ee7b7; }
+    .code-ex .hl  { color: #f9a8d4; }
+
+    /* KEYBOARD SHORTCUT */
+    .kbd-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .kbd-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+    .kbd-item .kbd-label { color: var(--text); }
+    .kbd-item .kbd-keys { display: flex; gap: 4px; }
+    .kbd {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: monospace;
+      font-size: 0.72rem;
+      color: var(--g2);
+    }
+
+    /* WARN / FIX */
+    .warn-box {
+      background: rgba(251,191,36,0.07);
+      border: 1px solid rgba(251,191,36,0.22);
+      border-radius: 8px;
+      padding: 10px 13px;
+      margin-bottom: 8px;
+    }
+    .warn-box .wlabel {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--y1); margin-bottom: 4px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .warn-box p { font-size: 0.8rem !important; color: #c8a84b !important; line-height: 1.55 !important; margin-bottom: 0 !important; }
+
+    .fix-box {
+      background: rgba(52,211,153,0.07);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 8px;
+      padding: 10px 13px;
+      margin-bottom: 14px;
+    }
+    .fix-box .flabel {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--g1); margin-bottom: 4px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .fix-box p { font-size: 0.8rem !important; color: #6ee7b7 !important; line-height: 1.55 !important; margin-bottom: 0 !important; }
+
+    /* CHIPS */
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .chip { font-size: 0.72rem; padding: 3px 9px; border-radius: 100px; font-weight: 500; }
+    .chip.green  { background: rgba(52,211,153,0.13); color: var(--g1); }
+    .chip.blue   { background: rgba(96,165,250,0.13); color: var(--b1); }
+    .chip.red    { background: rgba(248,113,113,0.13); color: var(--r1); }
+    .chip.yellow { background: rgba(251,191,36,0.13); color: var(--y1); }
+    .chip.purple { background: rgba(167,139,250,0.13); color: var(--p1); }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+    /* TIP */
+    .tip-box {
+      background: rgba(52,211,153,0.06);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .tip-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .tip-box h3 { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .tip-box p  { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 28px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 64px;
+    }
+    footer a { color: var(--g1); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">G</div>
+    <h1>Anti-Gravity 기능 레퍼런스</h1>
+  </div>
+  <div class="header-sub">Google의 VS Code 호환 코드 에디터 · 실사용 기준 · 단점 & 해결책 포함</div>
+  <div class="header-meta">
+    <span class="meta-chip live">antigravity.google/</span>
+    <span class="meta-chip">VS Code 호환</span>
+    <span class="meta-chip">.vsix 확장 지원</span>
+    <span class="meta-chip">2026.06 기준</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ─── #1 확장 프로그램 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#1 압도적 1위</span>
+    <span class="rank-title">가장 많이 쓰는 기능</span>
+  </div>
+
+  <div class="feature-row cols-1">
+    <div class="card c-green">
+      <span class="badge-hot">HOT</span>
+      <span class="card-icon">🧩</span>
+      <h2>VS Code 확장 프로그램 (.vsix) 호환</h2>
+      <p>Anti-Gravity의 핵심 강점. VS Code용으로 만들어진 .vsix 확장 프로그램을 그대로 설치해서 쓸 수 있습니다. Connect AI, ESLint, Prettier, GitHub Copilot 등 VS Code 생태계를 그대로 활용합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> Connect AI 설치: 사이드바 AI 에이전트 + 가상 사무실</li>
+        <li><span class="arrow">→</span> ESLint / Prettier / GitLens 등 기존 VS Code 확장 그대로</li>
+        <li><span class="arrow">→</span> .vsix 파일 직접 설치 (커맨드라인 또는 드래그앤드롭)</li>
+      </ul>
+      <div class="code-ex">
+        <span class="kw">code</span> <span class="cmd">--install-extension</span> <span class="arg">connect-ai-lab-2.89.153.vsix</span> <span class="cmd">--force</span><br />
+        <span class="cmt"># extensions 폴더: ~/.antigravity/extensions/</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>VS Code와 100% 호환은 아닙니다.</strong> 일부 VS Code 전용 API를 쓰는 확장은 동작 안 하거나 버그납니다. 확장 업데이트 시 Anti-Gravity 버전과 충돌하는 경우도 있습니다. Marketplace에서 직접 설치가 안 되고 .vsix를 직접 받아야 하는 경우도 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>확장이 안 되면 VS Code에서 먼저 테스트하고 Anti-Gravity로 이동하세요. 버전 고정이 필요하면 <code>--force</code>로 재설치합니다. extensions 폴더에서 이전 버전 .vsix를 직접 삭제해서 충돌을 없앱니다.</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip green">.vsix 설치</span>
+        <span class="chip green">VS Code 생태계</span>
+        <span class="chip green">Connect AI 호환</span>
+        <span class="chip blue">~/.antigravity/extensions/</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #2 오프라인 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#2</span>
+    <span class="rank-title">오프라인 & 로컬 실행</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-green">
+      <span class="badge-hot">HOT</span>
+      <span class="card-icon">📡</span>
+      <h2>완전 오프라인 작동</h2>
+      <p>인터넷 없이도 에디터 전체가 동작합니다. 로컬 LLM(LM Studio, Ollama)과 연결하면 AI 기능도 오프라인으로 씁니다. 비행기, 지하, 와이파이 없는 시연 환경에서 완벽합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 와이파이 끊고 AI 채팅 — 정상 동작</li>
+        <li><span class="arrow">→</span> 로컬 LLM + Connect AI = 완전 오프라인 AI 개발</li>
+        <li><span class="arrow">→</span> Git, 터미널, 디버거 전부 오프라인 동작</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>Google 계정 동기화, Extensions Marketplace, GitHub 연동은 당연히 인터넷이 필요합니다. 로컬 LLM은 GPU/RAM이 부족하면 느리거나 OOM(메모리 부족) 으로 죽습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>오프라인 시연 전에 온라인 상태에서 확장/모델을 미리 다운받아 두세요. RAM 16GB 이상이면 7B 모델 안정적. 부족하면 3B 모델(llama-3.2-3b)로 낮추세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-green">
+      <span class="card-icon">⚡</span>
+      <h2>로컬 LLM 브릿지 (:4825)</h2>
+      <p>HTTP 브릿지가 포트 4825에서 실행되어 LM Studio(:1234) 또는 Ollama(:11434)와 연결합니다. AI 에이전트가 이 브릿지를 통해 로컬 LLM을 호출합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> LM Studio와 연결: qwen2.5-7b, llama-3.2-3b</li>
+        <li><span class="arrow">→</span> Ollama 폴백 자동 전환</li>
+        <li><span class="arrow">→</span> 스트리밍 + JSON-mode 지원</li>
+      </ul>
+      <div class="code-ex">
+        <span class="cmt"># 브릿지 상태 확인</span><br />
+        <span class="kw">curl</span> <span class="url">http://127.0.0.1:4825/ping</span><br />
+        <span class="cmt"># LM Studio 기본 포트</span><br />
+        <span class="kw">curl</span> <span class="url">http://127.0.0.1:1234/v1/models</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>Anti-Gravity 창을 여러 개 열면 포트 4825 충돌이 납니다.</strong> 먼저 열린 창이 포트를 점유하고 두 번째 창은 브릿지 없이 실행됩니다. LM Studio가 꺼진 상태에서 AI를 호출하면 무한 대기 또는 에러가 납니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>Anti-Gravity 창은 한 개만 유지하세요. AI 호출 전에 반드시 <code>/ping</code>으로 브릿지 상태를 확인합니다. LM Studio는 Anti-Gravity보다 먼저 실행하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #3 커맨드 팔레트 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#3</span>
+    <span class="rank-title">커맨드 팔레트 & 단축키</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-blue">
+      <span class="badge-google">Google</span>
+      <span class="card-icon">⌨</span>
+      <h2>커맨드 팔레트</h2>
+      <p>VS Code와 동일한 커맨드 팔레트를 씁니다. 모든 기능을 키보드만으로 실행 가능합니다.</p>
+      <ul class="kbd-list">
+        <li class="kbd-item">
+          <span class="kbd-label">커맨드 팔레트 열기</span>
+          <span class="kbd-keys"><span class="kbd">Cmd/Ctrl</span><span class="kbd">Shift</span><span class="kbd">P</span></span>
+        </li>
+        <li class="kbd-item">
+          <span class="kbd-label">파일 빠른 열기</span>
+          <span class="kbd-keys"><span class="kbd">Cmd/Ctrl</span><span class="kbd">P</span></span>
+        </li>
+        <li class="kbd-item">
+          <span class="kbd-label">창 리로드 (확장 재시작)</span>
+          <span class="kbd-keys"><span class="kbd">Cmd/Ctrl</span><span class="kbd">Shift</span><span class="kbd">P</span></span>
+        </li>
+        <li class="kbd-item">
+          <span class="kbd-label">터미널 열기</span>
+          <span class="kbd-keys"><span class="kbd">Ctrl</span><span class="kbd">`</span></span>
+        </li>
+        <li class="kbd-item">
+          <span class="kbd-label">사이드바 토글</span>
+          <span class="kbd-keys"><span class="kbd">Cmd/Ctrl</span><span class="kbd">B</span></span>
+        </li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>일부 단축키가 OS 기본 단축키와 충돌합니다. Windows에서 <kbd>Ctrl+Shift+P</kbd>가 다른 앱과 겹치면 동작 안 합니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>설정 → 키보드 단축키에서 직접 재매핑하세요. 또는 <code>/keybindings-help</code> 스킬로 Claude Code에서 키 설정을 도움받을 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-blue">
+      <span class="card-icon">🔄</span>
+      <h2>창 리로드 (Developer: Reload Window)</h2>
+      <p>확장 프로그램 업데이트, 설정 변경, 브릿지 재시작 후 필수입니다. 전체 에디터를 다시 시작하지 않고 확장만 재초기화합니다.</p>
+      <div class="code-ex">
+        <span class="cmt"># 커맨드 팔레트에서</span><br />
+        <span class="hl">Developer: Reload Window</span><br /><br />
+        <span class="cmt"># .vsix 재설치 후 순서</span><br />
+        <span class="kw">1.</span> <span class="cmd">--install-extension *.vsix --force</span><br />
+        <span class="kw">2.</span> <span class="hl">Developer: Reload Window</span><br />
+        <span class="kw">3.</span> <span class="cmd">curl :4825/ping</span> <span class="cmt"># 브릿지 확인</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>리로드 후 열려 있던 터미널 세션이 모두 끊깁니다. 실행 중인 프로세스(로컬 서버 등)도 같이 죽습니다. 저장 안 된 파일이 있으면 날아갈 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>리로드 전 반드시 저장(<kbd>Ctrl+S</kbd>)하세요. 로컬 서버는 분리된 터미널(Windows Terminal 등)에서 실행하면 리로드에 영향 안 받습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #4 터미널 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#4</span>
+    <span class="rank-title">통합 터미널</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-yellow">
+      <span class="card-icon">💻</span>
+      <h2>통합 터미널</h2>
+      <p>에디터 안에서 터미널을 바로 씁니다. 탭으로 여러 터미널을 관리하고, 분할 뷰로 에디터와 터미널을 동시에 볼 수 있습니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> npm / pip / git 명령 바로 실행</li>
+        <li><span class="arrow">→</span> 여러 터미널 탭 (서버, 테스트, git 분리)</li>
+        <li><span class="arrow">→</span> 터미널 출력 → 에디터 파일 연동</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>창 리로드 시 터미널 세션이 전부 죽습니다.</strong> 대용량 출력(빌드 로그 등)이 터미널에 쌓이면 에디터 전체가 느려집니다. Windows에서 PowerShell/CMD 인코딩 문제(한글 깨짐)가 나올 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>중요한 서버는 외부 터미널에서 실행하세요. 한글 깨짐은 <code>chcp 65001</code> (UTF-8 설정) 으로 해결합니다. 빌드는 <code>&gt; build.log</code>로 파일에 저장해서 터미널 버퍼 부하를 줄이세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-yellow">
+      <span class="card-icon">🌿</span>
+      <h2>Git 통합</h2>
+      <p>사이드바 소스 컨트롤 패널에서 stage, commit, push를 GUI로 처리합니다. 브랜치 전환, diff 뷰, merge conflict 해결도 에디터 안에서 가능합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 변경 파일 한눈에 보기 + 스테이징</li>
+        <li><span class="arrow">→</span> 인라인 diff로 변경 내용 즉시 확인</li>
+        <li><span class="arrow">→</span> 브랜치 생성/전환 (하단 상태바 클릭)</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>복잡한 rebase, cherry-pick, stash는 GUI가 불편해서 결국 터미널로 가게 됩니다. 대형 레포(파일 수만 개)에서 git 상태 로딩이 느립니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>기본 commit/push는 GUI 활용, 고급 git 작업은 터미널로 직접 처리하는 이분법이 효율적입니다. GitLens 확장을 추가하면 기능이 훨씬 보강됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #5 AI 사이드바 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#5</span>
+    <span class="rank-title">AI 사이드바 (Connect AI)</span>
+  </div>
+
+  <div class="feature-row cols-1">
+    <div class="card c-green">
+      <span class="card-icon">🤖</span>
+      <h2>Connect AI 사이드바 + 가상 사무실</h2>
+      <p>Anti-Gravity에 Connect AI 확장을 설치하면 사이드바에 AI 채팅 + 픽셀 아트 가상 사무실이 활성화됩니다. 9명의 AI 에이전트(CEO, 코다리, 이태원, 홍병길, 미향 등)가 로컬 LLM으로 돌아가며 실시간으로 작업합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 사이드바 채팅: "코다리야 게임 만들어줘" → 30초 내 결과물</li>
+        <li><span class="arrow">→</span> DISPATCH PROTOCOL 시각화 — 에이전트 이동 + 광선 + 파티클</li>
+        <li><span class="arrow">→</span> EZER AI 패널 → 키트 클릭 → 두뇌 자동 주입</li>
+        <li><span class="arrow">→</span> PayPal 매출 대시보드 실시간 연동</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>LM Studio가 꺼져 있거나 모델 로드가 안 된 상태에서 채팅하면 <strong>무한 대기 또는 타임아웃</strong>이 납니다. 가상 사무실 시각화(WebGL 애니메이션)가 무거워서 저사양 PC에서 에디터 전체가 느려집니다. 에이전트가 잘못 이해한 명령을 실행하면 원하지 않는 파일이 생성됩니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>Anti-Gravity 실행 전에 LM Studio → 모델 로드 순서를 지킵니다. 시각화가 무거우면 가상 사무실 패널을 닫고 사이드바 채팅만 씁니다. 에이전트 실행 전 "어떻게 할 건지 먼저 설명해줘"로 계획을 확인하는 습관을 들이세요.</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip green">9명 에이전트</span>
+        <span class="chip green">로컬 LLM</span>
+        <span class="chip green">오프라인 동작</span>
+        <span class="chip blue">EZER AI 키트</span>
+        <span class="chip yellow">PayPal 연동</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #6 코드 편집 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#6</span>
+    <span class="rank-title">코드 편집 & IntelliSense</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-blue">
+      <span class="card-icon">✏</span>
+      <h2>IntelliSense & 자동완성</h2>
+      <p>언어별 자동완성, 타입 추론, 오류 표시를 실시간으로 제공합니다. VS Code와 동일한 Language Server Protocol(LSP)를 사용합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> TypeScript / JavaScript 타입 추론</li>
+        <li><span class="arrow">→</span> Python IntelliSense (Pylance)</li>
+        <li><span class="arrow">→</span> 인라인 에러 밑줄 + 빠른 수정 제안</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>언어 서버가 초기화될 때까지 수초 걸립니다. 대형 모노레포에서 타입 체크가 느리거나 멈춥니다. 일부 언어(특수 프레임워크)는 VS Code Extension이 없으면 IntelliSense가 없습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>파일 열고 5-10초 기다리면 IntelliSense가 살아납니다. 느리면 <code>TypeScript: Restart TS Server</code> 커맨드를 씁니다. 언어 서버가 없는 언어는 해당 확장을 .vsix로 설치하세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-blue">
+      <span class="card-icon">🐛</span>
+      <h2>통합 디버거</h2>
+      <p>중단점(breakpoint), 변수 감시, 콜스택 확인을 GUI로 처리합니다. Node.js, Python, 브라우저 디버깅을 지원합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> F5로 디버그 실행</li>
+        <li><span class="arrow">→</span> 줄 번호 클릭으로 중단점 설정</li>
+        <li><span class="arrow">→</span> 변수 hover 시 현재 값 표시</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><code>launch.json</code> 설정이 없으면 F5를 눌러도 실행이 안 됩니다. 복잡한 멀티프로세스 디버깅은 설정이 까다롭습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>처음 F5를 누르면 자동으로 <code>launch.json</code> 생성 안내가 뜹니다. 또는 "launch.json 만들어줘"라고 Claude Code에 요청하면 바로 만들어줍니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #7 확장 관리 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#7</span>
+    <span class="rank-title">확장 프로그램 관리</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-purple">
+      <span class="card-icon">📦</span>
+      <h2>확장 버전 관리</h2>
+      <p>여러 버전의 .vsix가 extensions 폴더에 쌓이면 충돌납니다. 필요한 버전만 남기고 정리하는 관리가 필요합니다.</p>
+      <div class="code-ex">
+        <span class="cmt"># 설치된 확장 목록 확인</span><br />
+        <span class="kw">ls</span> <span class="url">~/.antigravity/extensions/</span><br /><br />
+        <span class="cmt"># 구버전 삭제 (최신 버전만 남기기)</span><br />
+        <span class="kw">ls</span> <span class="url">~/.antigravity/extensions/</span> <span class="cmd">| grep connect-ai-lab</span><br />
+        <span class="cmd">| grep -v "2.89.153"</span><br />
+        <span class="cmd">| xargs -I{} rm -rf ~/.antigravity/extensions/{}</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>구버전을 삭제하지 않으면 <strong>어떤 버전이 로드됐는지 알 수 없습니다.</strong> extensions 폴더가 커질수록 Anti-Gravity 시작이 느려집니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>새 버전 설치 후 구버전은 반드시 삭제하세요. 위 스크립트를 그대로 써서 최신 버전만 남기면 됩니다. 설치된 버전은 확장 패널 or 폴더 직접 확인이 가장 확실합니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-purple">
+      <span class="card-icon">⚙</span>
+      <h2>settings.json 설정</h2>
+      <p>VS Code와 동일한 <code>settings.json</code>으로 에디터 동작을 커스터마이즈합니다. 탭 크기, 테마, 언어별 설정 등 모든 옵션이 JSON으로 관리됩니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 파일 자동 저장 (onFocusChange)</li>
+        <li><span class="arrow">→</span> 언어별 들여쓰기 (2/4 spaces)</li>
+        <li><span class="arrow">→</span> 터미널 기본 셸 설정</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>settings.json을 잘못 편집하면 에디터가 이상하게 동작합니다. VS Code와 Anti-Gravity의 설정 경로가 달라서 동기화가 안 됩니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>커맨드 팔레트에서 <code>Open Settings (JSON)</code>으로 열면 자동완성이 됩니다. 설정 변경 전 백업해두세요. VS Code와 Anti-Gravity 양쪽에서 작업한다면 설정 파일을 공유 폴더에 두고 symlink로 연결합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #8 멀티창 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#8</span>
+    <span class="rank-title">멀티 창 & 분할 뷰</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-red">
+      <span class="card-icon">🪟</span>
+      <h2>분할 편집기 (Split Editor)</h2>
+      <p>하나의 창에서 파일을 좌우/상하로 분할해서 동시에 편집합니다. 프론트/백엔드 파일을 나란히 보면서 작업할 때 유용합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> Ctrl+\ 로 현재 에디터 분할</li>
+        <li><span class="arrow">→</span> 최대 3-4열 분할 가능</li>
+        <li><span class="arrow">→</span> 같은 파일을 다른 위치에서 동시에 보기</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>Anti-Gravity 창 자체를 여러 개 띄우면 포트 4825 충돌.</strong> Connect AI 브릿지가 첫 번째 창에만 바인딩되어 두 번째 창에서는 AI가 동작 안 합니다. 분할 뷰를 너무 많이 열면 저사양 PC에서 버벅입니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>여러 프로젝트는 창을 따로 띄우는 대신 <strong>하나의 창에서 분할 뷰</strong>로 해결하세요. 멀티 프로젝트가 꼭 필요하면 첫 번째 창(AI 있는 창)을 기본 작업 창으로 고정합니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-red">
+      <span class="card-icon">🗂</span>
+      <h2>워크스페이스 (.code-workspace)</h2>
+      <p>여러 폴더를 하나의 워크스페이스로 묶어서 동시에 엽니다. 모노레포나 프론트+백엔드 분리 구조에서 유용합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 여러 루트 폴더를 한 창에서</li>
+        <li><span class="arrow">→</span> 워크스페이스별 settings.json 분리</li>
+        <li><span class="arrow">→</span> 최근 워크스페이스 빠른 전환</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>폴더가 많을수록 파일 탐색 트리가 복잡해져서 원하는 파일 찾기가 오히려 불편해집니다. 확장 일부가 멀티루트 워크스페이스를 제대로 지원 안 합니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>2-3개 폴더 이내로 유지하세요. 더 많으면 분리된 Anti-Gravity 창으로 나누는 게 낫습니다 (AI가 필요 없는 창은 포트 충돌 무관).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tip-box">
+    <span class="tip-icon">🚀</span>
+    <div>
+      <h3>Connect AI + Anti-Gravity 최적 실행 순서</h3>
+      <p><strong>1.</strong> LM Studio 실행 → 모델 로드 (qwen2.5-7b 권장)<br />
+         <strong>2.</strong> Anti-Gravity 실행 → 프로젝트 폴더 열기<br />
+         <strong>3.</strong> <code>curl http://127.0.0.1:4825/ping</code> 으로 브릿지 확인<br />
+         <strong>4.</strong> 사이드바 채팅 → 에이전트 호출<br />
+         이 순서를 지키면 연결 오류의 80%가 사라집니다.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">⚠</span>
+    <div>
+      <h3>Anti-Gravity vs VS Code — 언제 뭘 써야 하나</h3>
+      <p><strong>Anti-Gravity:</strong> Connect AI + 로컬 LLM + 오프라인 시연이 필요할 때. Google 생태계(Google AI, Gemini 연동)가 더 매끄럽습니다.<br />
+         <strong>VS Code:</strong> 확장 호환성 문제가 생기거나, 특정 VS Code 전용 기능(Live Share, Remote SSH 등)이 필요할 때. Connect AI는 VS Code에서도 동일하게 설치됩니다.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Anti-Gravity · <a href="https://antigravity.google/" target="_blank">antigravity.google/</a> · Google · 2026.06 기준
+</footer>
+
+</body>
+</html>

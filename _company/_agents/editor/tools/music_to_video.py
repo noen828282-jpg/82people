@@ -5,17 +5,33 @@
 설정에서 VIDEO_PATH 지정 (또는 LAST_GENERATED 자동 사용).
 영상 길이에 BGM 자동 맞춤 (loop 또는 fade out).
 """
-import os, sys, json, subprocess, shutil
+
+import sys
+import os, json, subprocess, shutil
+
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 GEN_CONFIG = os.path.join(HERE, "music_generate.json")
 MERGE_CONFIG = os.path.join(HERE, "music_to_video.json")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "🎬", "ok": "✅", "warn": "⚠️ ", "err": "❌"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
-
 
 def _load(p):
     if os.path.exists(p):
@@ -25,7 +41,6 @@ def _load(p):
         except Exception:
             pass
     return {}
-
 
 def main():
     if not shutil.which("ffmpeg"):
@@ -94,7 +109,6 @@ def main():
     print(f"  📁 {output_path}")
     print(f"  📊 {size_mb:.1f} MB")
     print(f"  🎵 BGM 볼륨 {int(bgm_volume * 100)}%로 믹싱됨")
-
 
 if __name__ == "__main__":
     main()

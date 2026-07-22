@@ -1,0 +1,54 @@
+[
+  {
+    "id": "kb_001",
+    "name": "MX Keys Mini 무선 기계식 키보드",
+    "url": "https://example.com/products/mx-keys-mini",
+    "category": "keyboard",
+    "price": 139000,
+    "description": "콤팩트한 텐키리스 디자인의 무선 기계식 키보드. 스마트 백라이트와 이지스위치 탑재.",
+    "images": [
+      "https://example.com/images/mx-keys-mini-1.jpg"
+    ],
+    "reviews": [
+      "키감이 아주 쫀득하고 칠 때 기분이 좋습니다."
+    ],
+    "score": 4.55,
+    "review_summary": {
+      "pros": [
+        "키감이 쫀득하고 칠 때 기분이 좋습니다."
+      ],
+      "cons": [
+        "특이 단점 발견되지 않음"
+      ],
+      "overall": "키감이 쫀득하고 칠 때 기분이 좋습니다."
+    },
+    "risk": false,
+    "reason": "통과 (특이 리스크 키워드 없음)"
+  },
+  {
+    "id": "pad_001",
+    "name": "프리미엄 펠트 데스크 매트 L",
+    "url": "https://example.com/products/felt-desk-mat",
+    "category": "desk-accessory",
+    "price": 24900,
+    "description": "양모 펠트 데스크 매트. 책상 위 분위기를 최고로 만들어주고 미끄러짐을 100% 보장 방지합니다.",
+    "images": [
+      "https://example.com/images/felt-mat-1.jpg"
+    ],
+    "reviews": [
+      "책상 분위기가 따뜻해지고 엄청 깔끔하게 정리됩니다."
+    ],
+    "score": 4.03,
+    "review_summary": {
+      "pros": [
+        "책상 분위기가 따뜻해지고 엄청 깔끔하게 정리됩니다."
+      ],
+      "cons": [
+        "특이 단점 발견되지 않음"
+      ],
+      "overall": "책상 분위기가 따뜻해지고 엄청 깔끔하게 정리됩니다."
+    },
+    "risk": true,
+    "reason": "금지어 검출: ['최고', '100% 보장']"
+  }
+]

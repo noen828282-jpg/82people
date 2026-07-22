@@ -12,18 +12,35 @@ config:
   PROJECT_PATH — 검증할 프로젝트 (비우면 web_init 마지막 결과)
   STRICT       — 'true' 면 첫 실패에서 멈춤. 기본 false (모두 시도)
 """
-import os, sys, json, subprocess, glob
+import os
+import sys
+import json
+import subprocess
+import glob
 
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.path.join(HERE, "lint_test.json")
 WEB_INIT_CFG = os.path.join(HERE, "web_init.json")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "🧪", "ok": "✅", "warn": "⚠️ ", "err": "❌", "step": "▸"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
-
 
 def _load(p):
     if not os.path.exists(p):
@@ -34,7 +51,6 @@ def _load(p):
     except Exception:
         return {}
 
-
 def _run(cmd, cwd, timeout=180):
     _log(f"$ {cmd}", "step")
     try:
@@ -44,7 +60,6 @@ def _run(cmd, cwd, timeout=180):
         return -1, f"⏱ Timeout ({timeout}s)"
     except Exception as e:
         return -2, str(e)
-
 
 def main():
     cfg = _load(CONFIG)
@@ -96,8 +111,9 @@ def main():
         py_files = [f for f in py_files if "venv" not in f and ".venv" not in f and "__pycache__" not in f]
         if py_files:
             errs = []
+            py_cmd = "python" if sys.platform.startswith("win") else "python3"
             for pf in py_files[:30]:  # 30개 cap
-                code, out = _run(f"python3 -m py_compile {json.dumps(pf)}", cwd=project, timeout=10)
+                code, out = _run(f"{py_cmd} -m py_compile {json.dumps(pf)}", cwd=project, timeout=10)
                 if code != 0:
                     errs.append((pf, out.strip()[:120]))
             if errs:
@@ -131,7 +147,6 @@ def main():
         print("> 🎉 모든 검증 통과. 안전하게 다음 단계로.")
     else:
         print(f"> ⚠️ {len(results) - passed}개 실패 — 위 출력 보고 수정 필요.")
-
 
 if __name__ == "__main__":
     main()

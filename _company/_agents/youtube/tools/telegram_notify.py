@@ -9,7 +9,25 @@ Two modes:
 telegram_v3 — Secretary's tools/telegram_setup.json is the canonical
 UI-managed home (input via Skills ⚙️). Falls back to legacy config.md
 and finally to youtube_account.json so older setups keep working."""
-import os, json, sys, time, re
+
+import sys
+import os, json, time, re
+
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ACCOUNT = os.path.join(HERE, "youtube_account.json")
@@ -51,6 +69,39 @@ def _resolve_telegram():
             pass
     return token, chat
 
+def clean_message(text):
+    if not text:
+        return ""
+    # Remove thought block with various opening/closing tags
+    text = re.sub(r'<(?:/)?(?:\|)?channel(?:\|)?>thought.*?</?channel(?:\|)?>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<\|channel\|?>thought.*?(?:<channel\|?>|</channel\|?>)', '', text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<(?:/)?(?:\|)?channel(?:\|)?>thought.*', '', text, flags=re.DOTALL | re.IGNORECASE)
+    text = text.replace("<|channel>thought", "").replace("</channel>thought", "").replace("<channel>", "").replace("</channel>", "").replace("<|channel|>", "").replace("<channel|>", "")
+    
+    # Remove evaluation and next step lines
+    text = re.sub(r'(?:📊\s*)?평가\s*:\s*[^\n]*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'(?:📝\s*)?다음\s*단계\s*:\s*[^\n]*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'자가검증:\s*사실\s*\d+개\s*/\s*추측\s*\d+개', '', text, flags=re.IGNORECASE)
+    
+    # Remove system status analysis blocks
+    system_patterns = [
+        r'현재\s*상황\s*분석:.*?(?=\n\n|\Z)',
+        r'실행\s*계획:.*?(?=\n\n|\Z)',
+        r'검토할\s*자료:.*?(?=\n\n|\Z)',
+        r'실행:.*?(?=\n\n|\Z)',
+        r'자가검증\s*프로토콜\s*적용:.*?(?=\n\n|\Z)',
+        r'사용자는\s*현재\s*\'?📱\s*미향\'?\s*에이전트의\s*역할을\s*수행하고\s*있으며.*?(?=\n\n|\Z)'
+    ]
+    for pattern in system_patterns:
+        text = re.sub(pattern, '', text, flags=re.DOTALL | re.IGNORECASE)
+
+    # Clean intermediate status text from block
+    text = re.sub(r'^[ \t]*(?:계획\s*수립\s*중|계획\s*수립|진행\s*중|대기)[ \t]*$', '', text, flags=re.MULTILINE | re.IGNORECASE)
+
+    # Normalize newlines
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
+
 def main():
     token, chat = _resolve_telegram()
     if not token or not chat:
@@ -64,6 +115,30 @@ def main():
         body = " ".join(sys.argv[1:])
     else:
         body = f"✅ 텔레그램 연결 정상 — {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n비서(Secretary) 또는 YouTube 도구가 이 채널로 보고를 보낼 수 있습니다."
+
+    is_test_msg = "텔레그램 연결 정상" in body
+    body = clean_message(body)
+
+    # If the message is empty or contains intermediate status text, skip sending
+    skip_keywords = ["계획 수립", "계획수립", "진행중", "진행 중", "대기", "작업 시작", "작업 분배", "전달했어요", "전달 완료"]
+    is_report = body.count("\n") > 5 and ("###" in body or "- " in body or "1." in body)
+    
+    should_skip = False
+    matched_kw = ""
+    if not is_test_msg:
+        if not body.strip():
+            should_skip = True
+        else:
+            for kw in skip_keywords:
+                if kw in body:
+                    if not is_report or len(body) < 200:
+                        should_skip = True
+                        matched_kw = kw
+                        break
+
+    if should_skip:
+        print(f"ℹ️ Message filtered out (intermediate status or skip keyword '{matched_kw}' found). Skipping Telegram push.")
+        sys.exit(0)
 
     try:
         import requests

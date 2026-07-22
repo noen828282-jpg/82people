@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Code 기능 레퍼런스</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0d0d14;
+      --bg2: #12121c;
+      --card: #18182a;
+      --card2: #1e1e30;
+      --border: #2e2e45;
+      --accent: #7c3aed;
+      --accent2: #a855f7;
+      --cyan: #06b6d4;
+      --amber: #f59e0b;
+      --green: #10b981;
+      --red: #f43f5e;
+      --blue: #3b82f6;
+      --orange: #f97316;
+      --text: #d1d5e8;
+      --muted: #7880a0;
+      --white: #f0f2ff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    .header {
+      padding: 48px 32px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .logo-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .header h1 { font-size: 1.5rem; font-weight: 800; color: var(--white); }
+    .header-sub { font-size: 0.9rem; color: var(--muted); margin-left: 44px; }
+
+    .main { max-width: 1100px; margin: 0 auto; padding: 32px; }
+
+    .rank-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      margin-top: 48px;
+    }
+    .rank-label:first-child { margin-top: 0; }
+
+    .rank-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--card2);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .rank-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .feature-row {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .feature-row.cols-1 { grid-template-columns: 1fr; }
+    .feature-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .feature-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    @media (max-width: 760px) {
+      .feature-row.cols-2,
+      .feature-row.cols-3 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card.c-purple:hover { border-color: var(--accent2); }
+    .card.c-cyan:hover   { border-color: var(--cyan); }
+    .card.c-amber:hover  { border-color: var(--amber); }
+    .card.c-green:hover  { border-color: var(--green); }
+    .card.c-red:hover    { border-color: var(--red); }
+    .card.c-blue:hover   { border-color: var(--blue); }
+    .card.c-orange:hover { border-color: var(--orange); }
+
+    .badge-hot {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 3px 8px; border-radius: 100px;
+      background: rgba(239,68,68,0.18); color: #f87171;
+      border: 1px solid rgba(239,68,68,0.3);
+    }
+    .badge-new {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 3px 8px; border-radius: 100px;
+      background: rgba(16,185,129,0.18); color: #34d399;
+      border: 1px solid rgba(16,185,129,0.3);
+    }
+
+    .card-icon { font-size: 26px; margin-bottom: 12px; display: block; }
+
+    .card h2 {
+      font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 8px;
+    }
+
+    .card > p {
+      font-size: 0.855rem; color: var(--muted); line-height: 1.65; margin-bottom: 14px;
+    }
+
+    /* USE LIST */
+    .use-list { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .use-list li { font-size: 0.82rem; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .use-list li .arrow { color: var(--muted); flex-shrink: 0; }
+
+    /* CODE BLOCK */
+    .code-ex {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .code-ex .slash  { color: #c4b5fd; }
+    .code-ex .cmd    { color: #93c5fd; }
+    .code-ex .arg    { color: #fde68a; }
+    .code-ex .str    { color: #86efac; }
+    .code-ex .cmt    { color: #475569; }
+    .code-ex .nat    { color: #fca5a5; }
+
+    /* ── WARN / FIX BOXES ── */
+    .warn-box {
+      background: rgba(245,158,11,0.07);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: 8px;
+      padding: 10px 13px;
+      margin-bottom: 8px;
+    }
+    .warn-box .wlabel {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .warn-box p {
+      font-size: 0.8rem !important;
+      color: #c8a84b !important;
+      line-height: 1.55 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .fix-box {
+      background: rgba(16,185,129,0.07);
+      border: 1px solid rgba(16,185,129,0.22);
+      border-radius: 8px;
+      padding: 10px 13px;
+      margin-bottom: 14px;
+    }
+    .fix-box .flabel {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .fix-box p {
+      font-size: 0.8rem !important;
+      color: #6ee7b7 !important;
+      line-height: 1.55 !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* CHIPS */
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .chip { font-size: 0.72rem; padding: 3px 9px; border-radius: 100px; font-weight: 500; }
+    .chip.purple { background: rgba(168,85,247,0.15); color: var(--accent2); }
+    .chip.cyan   { background: rgba(6,182,212,0.15);  color: var(--cyan); }
+    .chip.amber  { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .chip.green  { background: rgba(16,185,129,0.15); color: var(--green); }
+    .chip.red    { background: rgba(244,63,94,0.15);  color: var(--red); }
+    .chip.blue   { background: rgba(59,130,246,0.15); color: var(--blue); }
+    .chip.orange { background: rgba(249,115,22,0.15); color: var(--orange); }
+
+    .divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+    .tip-box {
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .tip-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .tip-box h3 { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .tip-box p  { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 28px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 64px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo-dot">✦</div>
+    <h1>Claude Code 기능 레퍼런스</h1>
+  </div>
+  <div class="header-sub">실제 사용 빈도 순 · 단점 & 해결책 포함 · 2026.06 기준</div>
+</div>
+
+<div class="main">
+
+  <!-- ─── #1 GOAL ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#1 압도적 1위</span>
+    <span class="rank-title">가장 많이 쓰는 기능</span>
+  </div>
+
+  <div class="feature-row cols-1">
+    <div class="card c-purple">
+      <span class="badge-hot">HOT</span>
+      <span class="card-icon">🎯</span>
+      <h2>Goal 실행 — "이거 해줘"</h2>
+      <p>Claude Code의 핵심. 슬래시 명령 없이 목표를 자연어로 말하면 파일을 읽고, 코드를 수정하고, git까지 알아서 처리합니다. 대부분의 사용자가 하루 대부분을 이 방식으로 씁니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> "이 버그 고쳐줘 / 이 에러 원인 찾아줘"</li>
+        <li><span class="arrow">→</span> "로그인 기능 JWT + 소셜 로그인 포함해서 만들어줘"</li>
+        <li><span class="arrow">→</span> "테스트 코드 작성해줘 / 리팩토링해줘"</li>
+      </ul>
+      <div class="code-ex">
+        <span class="nat">"결제 페이지에서 PayPal 버튼이 안 눌려, 고쳐줘"</span><br />
+        <span class="nat">"이 함수 너무 복잡해, 단순하게 리팩토링해줘"</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>목표가 불명확하거나 범위가 너무 크면 Claude가 계속 파일을 읽고 수정하면서 <strong>무한루프에 빠져 토큰을 대량 소비</strong>합니다. "전체 리팩토링해줘" 같은 모호한 지시가 특히 위험합니다. 중간에 방향을 바꾸면 앞서 수정한 내용과 충돌이 나기도 합니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>범위를 명확하게 한정하세요. "이 파일의 이 함수만", "이 3개 파일만 건드려줘" 식으로 구체적일수록 좋습니다. 큰 작업은 단계를 나눠서 하나씩 확인하면서 진행하고, Plan Mode를 먼저 써서 접근 방식을 확인한 뒤 승인하세요.</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip purple">자연어 명령</span>
+        <span class="chip purple">파일 자동 탐색</span>
+        <span class="chip purple">멀티 파일 편집</span>
+        <span class="chip purple">git 자동화</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #2 WEB SEARCH ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#2</span>
+    <span class="rank-title">딥 서치 & 웹 검색</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-cyan">
+      <span class="badge-hot">HOT</span>
+      <span class="card-icon">🔍</span>
+      <h2>웹 검색 (WebSearch)</h2>
+      <p>모르는 에러, 최신 API 문서, 라이브러리 호환성을 실시간으로 검색합니다. 학습 데이터가 아닌 지금 웹의 최신 정보를 가져옵니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 에러 메시지 원인 검색</li>
+        <li><span class="arrow">→</span> 최신 npm 패키지 버전 확인</li>
+        <li><span class="arrow">→</span> 공식 문서 최신 API 조회</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>검색 결과가 오래됐거나 신뢰도 낮은 사이트 내용을 그대로 쓸 수 있습니다. 여러 번 검색하면 컨텍스트를 많이 소모해 속도가 느려집니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>공식 문서 URL을 직접 알려주면 더 정확합니다. "검색 말고 이 URL 읽어줘" 방식으로 WebFetch를 쓰면 신뢰도가 훨씬 높아집니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-cyan">
+      <span class="card-icon">🌐</span>
+      <h2>웹 크롤링 (WebFetch)</h2>
+      <p>특정 URL의 내용을 직접 읽어옵니다. 공식 문서, GitHub README, 블로그를 크롤링해서 코드에 반영합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 공식 문서 페이지 내용 읽기</li>
+        <li><span class="arrow">→</span> GitHub 이슈/PR 내용 파악</li>
+        <li><span class="arrow">→</span> 특정 페이지 내용 기반 코드 작성</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>JavaScript로 렌더링되는 SPA 페이지는 내용을 제대로 못 읽습니다. 큰 페이지는 중간에서 잘립니다. 로그인이 필요한 페이지는 접근 불가합니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>섹션이 있는 URL (앵커 포함)을 주거나, 필요한 내용을 직접 복사해서 대화에 붙여넣으면 더 정확합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #3 파일 탐색 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#3</span>
+    <span class="rank-title">코드베이스 탐색</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-blue">
+      <span class="card-icon">🗂</span>
+      <h2>파일 & 코드 탐색</h2>
+      <p>Glob 패턴 + 정규식 검색으로 대규모 프로젝트에서 원하는 파일이나 함수를 순식간에 찾습니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> "이 함수 어디서 쓰이는지 찾아줘"</li>
+        <li><span class="arrow">→</span> "결제 관련 파일들 다 보여줘"</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>큰 프로젝트에서 너무 광범위하게 탐색하면 수십 개 파일을 읽어서 <strong>컨텍스트 윈도우를 빠르게 채웁니다.</strong> 컨텍스트가 꽉 차면 이전 내용이 압축돼 기억이 흐려집니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>탐색 범위를 좁혀 지시하세요. "src/payment 폴더만", "이 파일들만 봐줘" 식으로 디렉토리를 한정합니다. Explore 에이전트를 써서 메인 컨텍스트를 보호하는 것도 방법입니다.</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip blue">Glob</span>
+        <span class="chip blue">Grep</span>
+        <span class="chip blue">심볼 탐색</span>
+      </div>
+    </div>
+
+    <div class="card c-blue">
+      <span class="card-icon">🔎</span>
+      <h2>Explore 에이전트</h2>
+      <p>복잡한 탐색을 전담 서브 에이전트에게 위임해서 메인 컨텍스트를 보호합니다. 처음 보는 레포 구조 파악에 유용합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 아키텍처 빠르게 파악</li>
+        <li><span class="arrow">→</span> 의존성 관계 추적</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>파일 전체가 아닌 excerpt(발췌)만 읽기 때문에 <strong>파일 끝부분 내용을 놓칩니다.</strong> 코드 리뷰나 깊은 분석에는 부적합합니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>위치 파악(어디에 뭐가 있는지)에만 쓰고, 실제 내용 분석은 Claude가 직접 Read 하도록 하세요. "이 파일 전체 읽어줘"라고 명시하면 됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #4 GIT ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#4</span>
+    <span class="rank-title">Git & PR 작업</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-green">
+      <span class="card-icon">📦</span>
+      <h2>Git 커밋 & PR</h2>
+      <p>변경 사항을 파악하고 컨벤션에 맞는 커밋 메시지를 자동 생성, PR 설명까지 작성합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> "커밋해줘" → 변경 분석 후 메시지 생성</li>
+        <li><span class="arrow">→</span> "PR 만들어줘" → 제목/본문 자동 작성</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><code>.env</code>, API 키, 비밀번호가 담긴 파일이 실수로 커밋될 수 있습니다. <code>git add -A</code>를 쓰면 의도치 않은 파일까지 포함됩니다. force push를 요청하면 팀원 작업이 날아갈 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p><code>.gitignore</code>를 꼼꼼히 관리하고, "커밋 전에 뭘 추가할지 먼저 보여줘"라고 확인 단계를 거치세요. Claude는 기본적으로 민감 파일을 경고하지만, 명시적으로 물어보는 게 안전합니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-green">
+      <span class="card-icon">👀</span>
+      <h2>PR 리뷰 (/review)</h2>
+      <p>PR 전체를 검토하고 문제점, 개선점을 정리합니다. 머지 전 마지막 검토에 사용합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> PR 머지 전 마지막 검토</li>
+        <li><span class="arrow">→</span> 팀원 PR 빠르게 파악</li>
+      </ul>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">review</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>변경 파일이 많으면 모든 파일을 꼼꼼히 보지 않고 표면적인 리뷰에 그칩니다. 비즈니스 로직의 맥락을 모르면 중요한 버그를 놓칠 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>배경 맥락을 함께 알려주세요. "이 PR은 결제 실패 재시도 로직 추가야, 특히 타임아웃 케이스 집중해서 봐줘" 식으로 초점을 주면 리뷰 질이 올라갑니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #5 코드 리뷰 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#5</span>
+    <span class="rank-title">코드 리뷰</span>
+  </div>
+
+  <div class="feature-row cols-3">
+    <div class="card c-amber">
+      <span class="card-icon">⚡</span>
+      <h2>/code-review</h2>
+      <p>현재 브랜치 변경 사항을 리뷰합니다. low~high 레벨로 깊이 조절 가능합니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">code-review</span><br />
+        <span class="slash">/</span><span class="cmd">code-review</span> <span class="arg">high</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>low/medium 레벨은 복잡한 버그를 놓칩니다. 컨텍스트 없이 리뷰하면 false positive(없는 문제 지적)도 나옵니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>중요한 코드는 high 이상으로 올리고, 변경 의도를 먼저 설명한 뒤 리뷰 요청하세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-amber">
+      <span class="badge-new">ULTRA</span>
+      <span class="card-icon">🤖</span>
+      <h2>/code-review ultra</h2>
+      <p>멀티 에이전트가 클라우드에서 동시에 돌며 딥 리뷰. PR 인라인 코멘트 자동 작성 가능.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">code-review</span> <span class="arg">ultra</span><br />
+        <span class="slash">/</span><span class="cmd">code-review</span> <span class="arg">ultra --fix</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>클라우드 실행이라 비용이 발생하고 시간이 오래 걸립니다.</strong> 작은 변경에 ultra를 쓰면 낭비입니다. <code>--fix</code>는 리뷰 지적 사항을 자동으로 수정하는데, 원치 않는 변경이 생길 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>큰 PR이나 배포 직전에만 ultra를 씁니다. <code>--fix</code>는 수정 전 diff를 꼭 확인하세요. 소규모 변경엔 그냥 <code>/code-review high</code>로 충분합니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-amber">
+      <span class="card-icon">✂</span>
+      <h2>/simplify</h2>
+      <p>변경된 코드를 더 단순하게 리팩토링합니다. 버그 탐지가 아닌 품질 전용입니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">simplify</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>단순화 과정에서 <strong>과도한 추상화</strong>를 도입하거나 기존 코드 스타일과 맞지 않는 패턴을 쓸 수 있습니다. 팀 컨벤션을 모르면 오히려 복잡해집니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>적용 전 반드시 diff를 검토하고, "우리 팀은 이 패턴 안 씀" 같은 제약을 먼저 알려주세요. CLAUDE.md에 코딩 컨벤션을 적어두면 자동으로 따릅니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #6 실행 검증 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#6</span>
+    <span class="rank-title">앱 실행 & 검증</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-orange">
+      <span class="card-icon">▶</span>
+      <h2>/run — 앱 직접 실행</h2>
+      <p>코드 변경 후 실제 앱을 실행해서 동작을 확인합니다. 서버, CLI, 브라우저 앱 모두 지원합니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">run</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>브라우저 UI 변경은 직접 눈으로 확인이 어렵고, 앱 실행에 필요한 환경 변수나 DB 연결이 없으면 실행 자체가 실패합니다. 실행 결과를 잘못 해석해서 "잘 됨"으로 보고하는 경우도 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>환경 변수 세팅을 미리 확인하세요. UI 검증은 스크린샷이나 직접 브라우저에서 확인하는 것이 가장 확실합니다. Claude가 "잘 됩니다"라고 해도 직접 눌러보는 습관을 들이세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-orange">
+      <span class="card-icon">✅</span>
+      <h2>/verify — 동작 검증</h2>
+      <p>코드 변경이 실제로 의도한 대로 동작하는지 앱을 띄워서 직접 확인합니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">verify</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>타입 체크와 테스트 통과를 "기능이 정상"으로 오해할 수 있습니다. 골든 패스만 확인하고 엣지 케이스는 놓칩니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>"엣지 케이스도 테스트해줘 — 빈 입력, 네트워크 실패, 권한 없는 경우" 식으로 명시적으로 요청하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #7 보안 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#7</span>
+    <span class="rank-title">보안 리뷰</span>
+  </div>
+
+  <div class="feature-row cols-1">
+    <div class="card c-red">
+      <span class="card-icon">🔒</span>
+      <h2>/security-review — 보안 리뷰</h2>
+      <p>현재 브랜치 변경 사항에서 SQL 인젝션, XSS, 인증 문제, 민감 정보 노출 등 OWASP Top 10을 기준으로 취약점을 자동 탐지합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 사용자 입력 처리 코드 점검</li>
+        <li><span class="arrow">→</span> 인증/인가 로직 검토</li>
+        <li><span class="arrow">→</span> API 키 노출 여부 확인</li>
+      </ul>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">security-review</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>오탐(false positive)이 있습니다.</strong> 없는 취약점을 있다고 할 수 있고, 반대로 복잡한 비즈니스 로직에 숨은 취약점은 놓칩니다. 전문 보안 감사(penetration testing)를 대체하지는 못합니다. 변경 파일만 보기 때문에 기존 코드와의 상호작용에서 오는 취약점은 잡기 어렵습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>1차 필터로 쓰고 중요 시스템은 전문 보안 도구(SAST, Snyk 등)와 병행하세요. 오탐 지적에는 "왜 이게 취약점인지 설명해줘"라고 물어보면 실제 위험인지 판단할 수 있습니다.</p>
+      </div>
+
+      <div class="chips">
+        <span class="chip red">SQL 인젝션</span>
+        <span class="chip red">XSS</span>
+        <span class="chip red">인증 취약점</span>
+        <span class="chip red">OWASP Top 10</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #8 자동화 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#8</span>
+    <span class="rank-title">자동화 & 스케줄링</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-purple">
+      <span class="badge-new">NEW</span>
+      <span class="card-icon">⏰</span>
+      <h2>/schedule — 자동 루틴</h2>
+      <p>자연어로 스케줄을 설정하면 Claude가 크론 잡을 만들어 원격 에이전트를 자동 실행합니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">schedule</span> <span class="str">"매일 오전 9시 PR 리뷰"</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p><strong>잘못 설정하면 계속 실행되면서 비용이 누적됩니다.</strong> 스케줄 에이전트가 권한 없는 작업(push, 외부 API 호출 등)을 시도하다 오류 루프에 빠질 수 있습니다. 실행 결과를 모르면 문제가 생겨도 늦게 알아챕니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>먼저 1회 실행 테스트를 하고 스케줄을 설정하세요. 실행 후 알림(슬랙, 이메일)을 함께 설정해서 결과를 모니터링하고, 불필요한 스케줄은 <code>/schedule list</code>로 확인 후 삭제하세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-purple">
+      <span class="card-icon">🔁</span>
+      <h2>/loop — 반복 실행</h2>
+      <p>정해진 간격으로 같은 작업을 반복합니다. CI 폴링, 배포 상태 확인, 반복 테스트에 씁니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">loop</span> <span class="arg">5m</span> <span class="str">/verify</span><br />
+        <span class="slash">/</span><span class="cmd">loop</span>  <span class="cmt"># 자기 페이스 조절</span>
+      </div>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>컨텍스트가 압축되면 이전 상태를 잊어서 <strong>"다 끝났는데 계속 같은 작업을 반복"</strong>하는 상황이 생깁니다. 종료 조건이 불명확하면 영원히 돌 수 있습니다. 300초 이상 sleep하면 캐시가 날아가 비용이 늘어납니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>명확한 종료 조건을 지정하세요. "CI가 green이 되면 멈춰줘" 같은 조건부 루프가 좋습니다. 대기 간격은 270초 이하(캐시 유지)나 1200초 이상(비용 절감)으로 설정하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #9 멀티 에이전트 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#9</span>
+    <span class="rank-title">멀티 에이전트 & 계획 모드</span>
+  </div>
+
+  <div class="feature-row cols-2">
+    <div class="card c-cyan">
+      <span class="card-icon">🤖</span>
+      <h2>병렬 에이전트</h2>
+      <p>독립적인 작업을 동시에 여러 에이전트가 처리합니다. 대형 리팩토링, 멀티 파일 분석에서 시간을 절약합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 여러 파일 동시 분석</li>
+        <li><span class="arrow">→</span> 리서치 + 구현 병렬 실행</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>서로 다른 에이전트가 <strong>같은 파일을 동시에 수정하면 충돌</strong>이 납니다. 에이전트 결과를 통합할 때 일관성이 깨질 수 있습니다. 각 에이전트가 전체 컨텍스트를 공유하지 못해 전제가 달라질 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>진짜 독립적인 작업만 병렬화하세요. 같은 파일을 건드리는 작업은 순서대로 처리해야 합니다. "A 에이전트는 프론트, B 에이전트는 백엔드" 식으로 담당 영역을 명확히 나누세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-cyan">
+      <span class="card-icon">📋</span>
+      <h2>계획 모드 (Plan)</h2>
+      <p>코드를 짜기 전에 구현 전략을 설계합니다. 트레이드오프 분석 후 사용자 승인을 받고 실행합니다.</p>
+      <ul class="use-list">
+        <li><span class="arrow">→</span> 큰 기능 추가 전 설계 검토</li>
+        <li><span class="arrow">→</span> 리스크 있는 작업 사전 확인</li>
+      </ul>
+
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>계획 단계에서 너무 보수적이거나 과도하게 세밀한 계획을 세워서 <strong>실제 구현이 계획과 달라지는 경우</strong>가 많습니다. 계획을 세우는 데만 시간이 많이 걸려 간단한 작업에도 오버엔지니어링이 됩니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>간단한 작업엔 Plan Mode 불필요합니다. "이 기능 어떻게 구현할지 먼저 설명해줘, 코드는 아직 짜지 마" 식의 자연어 확인으로 충분한 경우가 많습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── #10 설정 ─── -->
+  <div class="rank-label">
+    <span class="rank-num">#10</span>
+    <span class="rank-title">설정 & 메모리</span>
+  </div>
+
+  <div class="feature-row cols-3">
+    <div class="card c-green">
+      <span class="card-icon">📄</span>
+      <h2>/init</h2>
+      <p>CLAUDE.md를 자동 생성합니다. 코드베이스를 분석해서 구조와 규칙을 문서화합니다.</p>
+      <div class="code-ex">
+        <span class="slash">/</span><span class="cmd">init</span>
+      </div>
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>자동 생성된 CLAUDE.md가 부정확하거나 중요한 컨벤션을 빠뜨릴 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>생성 후 반드시 수동으로 검토하고, 팀 컨벤션과 금지 패턴을 직접 추가하세요.</p>
+      </div>
+    </div>
+
+    <div class="card c-green">
+      <span class="card-icon">⚙</span>
+      <h2>update-config</h2>
+      <p>권한 설정, 훅 자동화, 환경변수 등 Claude Code 동작을 커스터마이즈합니다.</p>
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>권한을 너무 넓게 열면 Claude가 의도치 않은 명령(rm, 외부 API 호출)을 자동으로 실행할 수 있습니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>필요한 명령만 최소한으로 허용하세요. "이 작업에만 허용" 식으로 범위를 좁히는 게 안전합니다.</p>
+      </div>
+    </div>
+
+    <div class="card c-green">
+      <span class="card-icon">🧠</span>
+      <h2>메모리 시스템</h2>
+      <p>사용자 선호도, 피드백, 프로젝트 맥락을 파일로 저장해서 다음 대화에도 기억합니다.</p>
+      <div class="chips" style="margin-bottom:14px">
+        <span class="chip green">user</span>
+        <span class="chip green">feedback</span>
+        <span class="chip green">project</span>
+      </div>
+      <div class="warn-box">
+        <div class="wlabel">⚠ 단점</div>
+        <p>오래된 메모리가 현재 상황과 맞지 않아 <strong>잘못된 방향으로 안내</strong>할 수 있습니다. 민감 정보가 메모리에 저장될 경우 보안 이슈가 됩니다.</p>
+      </div>
+      <div class="fix-box">
+        <div class="flabel">✓ 해결책</div>
+        <p>주기적으로 메모리 파일을 검토하고 오래된 내용은 삭제하세요. "이거 기억하지 마" 또는 "기억 지워줘"라고 하면 즉시 삭제합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <div>
+      <h3>공통 단점 — 컨텍스트 윈도우 한계</h3>
+      <p>모든 기능의 공통 약점입니다. 대화가 길어지면 이전 내용이 압축되어 앞서 결정한 내용을 잊습니다. 긴 작업은 중간에 "/clear로 새로 시작하고 현재 상태 설명" 방식이 훨씬 효율적입니다. CLAUDE.md에 중요한 규칙을 적어두면 매 대화마다 자동으로 로드됩니다.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">⚡</span>
+    <div>
+      <h3>비용 관리 팁</h3>
+      <p>토큰 소비가 많은 순서: ultra 리뷰 > 멀티 에이전트 > 광범위 파일 탐색 > 목표 실행 > 단순 질문. 비용이 걱정되면 먼저 범위를 좁히고, 큰 기능은 단계를 나눠서 요청하고, ultra는 배포 직전에만 씁니다.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Claude Code · claude-sonnet-4-6 · 2026.06 기준 · 단점 포함 버전
+</footer>
+
+</body>
+</html>

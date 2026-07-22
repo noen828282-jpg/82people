@@ -11,6 +11,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.path.join(HERE, "telegram_setup.json")
 
 def main():
+    if sys.platform.startswith("win"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+            sys.stderr.reconfigure(encoding="utf-8")
+        except AttributeError:
+            import io
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+            sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
     if not os.path.exists(CONFIG):
         print("❌ telegram_setup.json이 없어요. 먼저 ⚙️ 클릭해서 토큰을 입력해주세요.")
         sys.exit(1)

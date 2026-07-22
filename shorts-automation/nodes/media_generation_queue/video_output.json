@@ -1,0 +1,126 @@
+{
+  "id": "pad_001",
+  "name": "프리미엄 펠트 데스크 매트 L",
+  "url": "https://example.com/products/felt-desk-mat",
+  "category": "desk-accessory",
+  "price": 24900,
+  "description": "따뜻하고 고급스러운 느낌의 양모 펠트 데스크 매트. 논슬립 패드로 밀림 방지.",
+  "images": [
+    "https://example.com/images/felt-mat-1.jpg"
+  ],
+  "score": 3.95,
+  "review_summary": {
+    "pros": [
+      "리뷰 데이터 없음"
+    ],
+    "cons": [
+      "리뷰 데이터 없음"
+    ],
+    "overall": "리뷰 데이터가 부재하여 감성 분석을 진행할 수 없습니다."
+  },
+  "competitor_analysis": {
+    "patterns": [
+      "데스크 매트의 다양한 활용법 소개",
+      "프리미엄 펠트 매트의 질감과 디자인 강조",
+      "데스크 정리 팁과 함께 매트 사용법 시연"
+    ],
+    "benchmarks": [
+      {
+        "title": "이 데스크 매트로 작업 효율 200% UP!",
+        "views": 350000,
+        "hook_style": "시작에 매트의 변화를 보여주며 시청자의 관심을 끌고, 빠른 템포로 다양한 사용 사례를 소개",
+        "visual_style": "매트의 질감을 클로즈업하고, 다양한 각도에서 사용하는 모습을 담은 빠른 컷 편집"
+      },
+      {
+        "title": "프리미엄 펠트 매트로 인테리어 완벽 변신!",
+        "views": 480000,
+        "hook_style": "매트 전후 비교로 시청자의 호기심을 자극하고, 매트의 장점을 강조하는 내레이션",
+        "visual_style": "매트가 놓인 데스크 전체 샷과 함께 다양한 소품과의 조화를 보여주는 비주얼"
+      }
+    ]
+  },
+  "scene_briefs": [
+    {
+      "scene_number": 1,
+      "visual_description": "손이 매트 위에서 문서와 펜을 정리하는 클로즈업 샷",
+      "audio_direction": "혼란스러운 사무실 소음, '정리의 시작'이라는 내레이션",
+      "duration_seconds": 3.0
+    },
+    {
+      "scene_number": 2,
+      "visual_description": "매트의 질감과 색상을 부드럽게 따라가는 팬 샷",
+      "audio_direction": "편안한 배경 음악, '프리미엄 펠트의 따뜻함을 느껴보세요'라는 내레이션",
+      "duration_seconds": 9.0
+    },
+    {
+      "scene_number": 3,
+      "visual_description": "깔끔한 데스크 세팅과 함께 가격이 적힌 텍스트 오버레이",
+      "audio_direction": "경쾌한 효과음, '지금 바로 구매하세요!'라는 내레이션",
+      "duration_seconds": 3.0
+    }
+  ],
+  "script": {
+    "overall_script": "혼란스러운 사무실? 정리의 시작! 프리미엄 펠트의 따뜻함을 느껴보세요~ 경쾌하게, 지금 바로 확인해보세요!",
+    "scenes_script": [
+      {
+        "scene_number": 1,
+        "narration": "혼란스러운 사무실? [한숨 효과음] 정리의 시작!"
+      },
+      {
+        "scene_number": 2,
+        "narration": "프리미엄 펠트의 따뜻함을 느껴보세요~ [ASMR 키보드 소리]"
+      },
+      {
+        "scene_number": 3,
+        "narration": "경쾌하게, 지금 바로 확인해보세요!"
+      }
+    ]
+  },
+  "media_prompts": [
+    {
+      "scene_number": 1,
+      "image_prompt": "A close-up shot of a hand organizing documents and a pen on a premium felt desk mat, showcasing its warm texture and rich color.",
+      "video_prompt": "A slow cinematic dolly-in from the side, focusing on the hand's movement as it gracefully arranges the items on the mat, with a soft-focus background."
+    },
+    {
+      "scene_number": 2,
+      "image_prompt": "A smooth pan shot following the texture and color of the premium felt desk mat, highlighting its luxurious feel and non-slip base.",
+      "video_prompt": "A smooth tracking pan that glides over the mat, capturing the intricate fibers and warm hues, with soft warm bokeh in the background."
+    },
+    {
+      "scene_number": 3,
+      "image_prompt": "A clean desk setup featuring the premium felt desk mat, with a minimalist aesthetic and a focus on the mat's elegance.",
+      "video_prompt": "A close-up soft-focus slide that reveals the desk setup, emphasizing the mat's presence in a serene and organized workspace."
+    }
+  ],
+  "media_assets": {
+    "images": [
+      {
+        "scene_number": 1,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene1.png"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene2.png"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene3.png"
+      }
+    ],
+    "videos": [
+      {
+        "scene_number": 1,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene1.mp4"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene2.mp4"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001\\pad_001_scene3.mp4"
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProductScoringInput",
+  "type": "ARRAY",
+  "items": {
+    "type": "OBJECT",
+    "properties": {
+      "id": {
+        "type": [
+          "STRING",
+          "INTEGER"
+        ]
+      },
+      "name": {
+        "type": "STRING"
+      },
+      "url": {
+        "type": "STRING",
+        "format": "uri"
+      },
+      "category": {
+        "type": "STRING"
+      },
+      "price": {
+        "type": "INTEGER"
+      },
+      "description": {
+        "type": "STRING"
+      },
+      "images": {
+        "type": "ARRAY",
+        "items": {
+          "type": "STRING",
+          "format": "uri"
+        }
+      },
+      "reviews": {
+        "type": "ARRAY",
+        "items": {
+          "type": "STRING"
+        },
+        "description": "상품 분석에 사용될 원본 리뷰 텍스트 리스트"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "url",
+      "category",
+      "price",
+      "description",
+      "images",
+      "reviews"
+    ]
+  }
+}

@@ -11,17 +11,36 @@ config:
   GENRE — 장르 힌트 (lo-fi, ambient, cinematic, edm 등)
   OUTPUT_DIR — 저장 위치 (디폴트 ~/connect-ai-music/output/)
 """
-import os, sys, json, subprocess, time
+
+import os, json, subprocess, time
+import os, sys
+import logging, warnings
+import torch, scipy.io.wavfile
+from transformers import MusicgenForConditionalGeneration, AutoProcessor
+
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SETUP_CONFIG = os.path.join(HERE, "music_studio_setup.json")
 GEN_CONFIG = os.path.join(HERE, "music_generate.json")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "🎵", "ok": "✅", "warn": "⚠️ ", "err": "❌"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
-
 
 def _load(p):
     if os.path.exists(p):
@@ -31,7 +50,6 @@ def _load(p):
         except Exception:
             pass
     return {}
-
 
 def _generate_musicgen(setup, prompt, duration_sec, output_path):
     """MusicGen 류 (transformers 기반). 가벼움."""
@@ -46,12 +64,9 @@ def _generate_musicgen(setup, prompt, duration_sec, output_path):
     # 변수에 먼저 담은 뒤 inner f-string에서 {{변수}} 형태로 참조 (literal { 이스케이프).
     wav_path = output_path.replace('.mp3', '.wav')
     script = f"""
-import os, sys
 os.environ['TRANSFORMERS_VERBOSITY'] = 'error'
-import logging, warnings
 logging.getLogger('transformers').setLevel(logging.ERROR)
 warnings.filterwarnings('ignore')
-import torch, scipy.io.wavfile
 
 PROMPT = {prompt!r}
 HF_ID = {hf_id!r}
@@ -60,7 +75,6 @@ DURATION_SEC = {duration_sec}
 MAX_TOKENS = {max_tokens}
 
 print('🔧 모델 로드 중...', file=sys.stderr, flush=True)
-from transformers import MusicgenForConditionalGeneration, AutoProcessor
 processor = AutoProcessor.from_pretrained(HF_ID)
 model = MusicgenForConditionalGeneration.from_pretrained(HF_ID)
 device = 'mps' if torch.backends.mps.is_available() else ('cuda' if torch.cuda.is_available() else 'cpu')
@@ -96,7 +110,6 @@ print('✅ wav: ' + WAV_PATH, file=sys.stderr, flush=True)
     # ffmpeg 없으면 wav 그대로
     return True, wav_path
 
-
 def _generate_acestep(setup, prompt, duration_sec, output_path):
     """ACE-Step — repo의 infer 스크립트 호출. 무거움."""
     venv_python = setup.get("VENV_PYTHON")
@@ -124,7 +137,6 @@ def _generate_acestep(setup, prompt, duration_sec, output_path):
     if not os.path.exists(output_path):
         return False, "출력 파일 없음 — ACE-Step 명령 형식이 다를 수 있음"
     return True, output_path
-
 
 def main():
     setup = _load(SETUP_CONFIG)
@@ -184,7 +196,6 @@ def main():
     cfg["LAST_PROMPT"] = prompt
     with open(GEN_CONFIG, "w", encoding="utf-8") as f:
         json.dump(cfg, f, ensure_ascii=False, indent=2)
-
 
 if __name__ == "__main__":
     main()

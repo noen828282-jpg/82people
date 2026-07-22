@@ -1,0 +1,71 @@
+[
+  {
+    "id": "hoya_concept_1783480713_1",
+    "name": "'회사 야근' 에디션: 간식 가방 지키는 천재 리트리버 호야",
+    "url": "https://www.youtube.com/@호야STUDIO",
+    "price": 0,
+    "rating": 5.0,
+    "review_count": 211,
+    "sourcing_method": "hoya_studio_concept",
+    "description": "주인이 간식 가방을 열어두고 자리를 비우자, 호야가 침 흘리면서도 의리를 지키며 가방을 지키는 1인칭 독백 상황극.",
+    "category": "vlog",
+    "score": 4.5,
+    "review_summary": {
+      "pros": [
+        "강아지의 귀여운 행동이 시청자에게 매력적임",
+        "1인칭 독백으로 재미있는 스토리텔링 가능"
+      ],
+      "cons": [
+        "리트리버의 행동을 잘 유도해야 함",
+        "촬영 및 편집에 시간과 노력이 필요할 수 있음"
+      ],
+      "overall": "호야의 귀여운 모습이 많은 사랑을 받을 가능성이 높음."
+    }
+  },
+  {
+    "id": "hoya_concept_1783480713_3",
+    "name": "'회사 야근' 에디션: 산책 가자는 말에 호야의 번역기 작동",
+    "url": "https://www.youtube.com/@호야STUDIO",
+    "price": 0,
+    "rating": 4.81,
+    "review_count": 244,
+    "sourcing_method": "hoya_studio_concept",
+    "description": "주인이 '산책'이라는 단어를 꺼내자마자 귀가 쫑긋해지며 마음속으로 흥분한 호야가 꼬리 헬리콥터를 돌리는 리액션 연출.",
+    "category": "lifestyle",
+    "score": 4.5,
+    "review_summary": {
+      "pros": [
+        "강아지의 귀여운 반응이 시청자에게 매력적임",
+        "산책이라는 주제가 많은 사람들의 공감을 얻을 수 있음"
+      ],
+      "cons": [
+        "촬영 장소와 조명이 중요하여 준비가 필요함",
+        "강아지의 반응이 일관되지 않을 수 있음"
+      ],
+      "overall": "귀여운 강아지 반응으로 높은 조회수를 기대할 수 있음."
+    }
+  },
+  {
+    "id": "hoya_concept_1783480713_2",
+    "name": "'회사 야근' 에디션: 대표님의 잔소리를 듣는 척하는 방법",
+    "url": "https://www.youtube.com/@호야STUDIO",
+    "price": 0,
+    "rating": 4.84,
+    "review_count": 98,
+    "sourcing_method": "hoya_studio_concept",
+    "description": "어질러진 휴지를 보고 주인이 잔소리할 때, 귀를 닫고 하품을 하거나 눈동자만 굴리며 딴생각하는 능청스러운 호야의 생각.",
+    "category": "comedy",
+    "score": 4.2,
+    "review_summary": {
+      "pros": [
+        "유머러스한 상황 설정",
+        "강아지의 귀여운 행동"
+      ],
+      "cons": [
+        "주인과의 상호작용 필요",
+        "촬영 환경의 제약"
+      ],
+      "overall": "유머와 귀여움이 결합된 매력적인 콘텐츠입니다."
+    }
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "clips": [
+    {
+      "path": "pad_001_scene1.mp4",
+      "duration": 6.0,
+      "isMock": false,
+      "imagePath": null
+    },
+    {
+      "path": "pad_001_scene2.mp4",
+      "duration": 6.0,
+      "isMock": false,
+      "imagePath": null
+    },
+    {
+      "path": "pad_001_scene3.mp4",
+      "duration": 6.0,
+      "isMock": false,
+      "imagePath": null
+    }
+  ],
+  "subtitles": [
+    {
+      "start": 0.0,
+      "end": 3.0,
+      "text": "아직도 밀리는 매트 쓰세요?"
+    },
+    {
+      "start": 3.0,
+      "end": 12.0,
+      "text": "분위기 180도 역전! 밀어봐도 꿈쩍도 안 해."
+    },
+    {
+      "start": 12.0,
+      "end": 15.0,
+      "text": "이 퀄리티, 사기임. 좌표는 첫댓글 확인!"
+    }
+  ]
+}

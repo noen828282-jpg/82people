@@ -1,0 +1,20 @@
+=== 스마트에디터 주입 실패 진단 보고서 ===
+현재 프레임 URL: https://blog.naver.com/happycj0930?Redirect=Write&
+  -> textarea 개수: 0
+  -> contenteditable 개수: 0
+  -> 하위 프레임 개수: 1
+     프레임 [0]: id="mainFrame", name="mainFrame", src="/PostList.naver?blogId=happycj0930&widgetTypeCall=true&noTrackingCode=true&directAccess=true"
+  현재 프레임 URL: https://blog.naver.com/happycj0930/postwrite
+    -> textarea 개수: 0
+    -> contenteditable 개수: 1
+       contenteditable: class=""
+    -> 하위 프레임 개수: 2
+       프레임 [0]: id="input_buffer1783579244559", name="", src=""
+    현재 프레임 URL: https://blog.naver.com/happycj0930/postwrite
+      -> textarea 개수: 0
+      -> contenteditable 개수: 1
+         contenteditable: class=""
+      -> 하위 프레임 개수: 0
+       프레임 [1]: id="ncaptcha-iframe-pv8ca5", name="", src="https://wtm.pstatic.net/fce46da/iframe.html"
+         -> 프레임 접근 보안 에러: Failed to read a named property 'document' from 'Window': Blocked a frame with origin "https://blog.naver.com" from accessing a cross-origin frame.
+=======================================

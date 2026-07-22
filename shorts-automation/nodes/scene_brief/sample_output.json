@@ -1,0 +1,63 @@
+{
+  "id": "kb_001",
+  "name": "MX Keys Mini 무선 기계식 키보드",
+  "url": "https://example.com/products/mx-keys-mini",
+  "category": "keyboard",
+  "price": 139000,
+  "description": "콤팩트한 텐키리스 디자인의 무선 기계식 키보드. 스마트 백라이트와 이지스위치 탑재.",
+  "images": [
+    "https://example.com/images/mx-keys-mini-1.jpg"
+  ],
+  "reviews": [
+    "키감이 아주 쫀득하고 칠 때 기분이 좋습니다."
+  ],
+  "score": 4.55,
+  "review_summary": {
+    "pros": [
+      "키감이 쫀득하고 칠 때 기분이 좋습니다."
+    ],
+    "cons": [
+      "특이 단점 발견되지 않음"
+    ],
+    "overall": "키감이 쫀득하고 칠 때 기분이 좋습니다."
+  },
+  "risk": false,
+  "reason": "통과 (특이 리스크 키워드 없음)",
+  "affiliate_url": "https://link.coupang.com/re/AFFSD?lptag=AF12345&pageKey=kb_001",
+  "disclosure": "본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+  "competitor_analysis": {
+    "patterns": [
+      "ASMR 감성 타건",
+      "문제 제기형 후킹",
+      "데스크테리어 셋업 시연"
+    ],
+    "benchmarks": [
+      {
+        "title": "서재 책상 분위기 180도 바꾸는 사기템 키보드 3종",
+        "views": 450000,
+        "hook_style": "직관적 비교형 (3종 제품 비교 및 책상 정리 후킹)",
+        "visual_style": "데스크테리어 실사 레이아웃, 조명 강조"
+      }
+    ]
+  },
+  "scene_briefs": [
+    {
+      "scene_number": 1,
+      "visual_description": "어두침침하고 선이 꼬여서 복잡한 컴퓨터 책상 앞에서 한숨을 쉬며 타이핑하는 손동작 클로즈업.",
+      "audio_direction": "긴장감 도는 어두운 톤의 효과음. '아직도 선 꼬이고 칙칙한 키보드로 작업하시나요?' 내레이션.",
+      "duration_seconds": 3.0
+    },
+    {
+      "scene_number": 2,
+      "visual_description": "선이 없는 MX Keys Mini 키보드가 깔끔하고 세련된 나무 책상 중앙에 배치되고, 스마트 백라이트가 부드럽게 켜지며 신속하게 타건하는 장면.",
+      "audio_direction": "경쾌하고 쫀득한 타건 기계식 소리 (ASMR 강조). '쫀득한 기계식 키감에 3대 멀티페어링까지, 책상을 깔끔하게 바꿔보세요.' 내레이션.",
+      "duration_seconds": 9.0
+    },
+    {
+      "scene_number": 3,
+      "visual_description": "화면 아래에 '자세한 구매 링크는 고정 댓글 확인' 그래픽 화살표 노출. 공정위 제휴 고지 문구가 자막으로 하단에 조그맣게 노출되는 장면.",
+      "audio_direction": "깔끔하고 경쾌한 안내음. '지금 아래 첫 번째 고정 댓글 링크에서 최저가로 만나보세요.' 내레이션.",
+      "duration_seconds": 3.0
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "id": "kb_001",
+  "name": "MX Keys Mini 무선 기계식 키보드",
+  "url": "https://example.com/products/mx-keys-mini",
+  "category": "keyboard",
+  "price": 139000,
+  "description": "콤팩트한 텐키리스 디자인의 무선 기계식 키보드. 스마트 백라이트와 이지스위치 탑재.",
+  "images": [
+    "https://example.com/images/mx-keys-mini-1.jpg"
+  ],
+  "reviews": [
+    "키감이 아주 쫀득하고 칠 때 기분이 좋습니다."
+  ],
+  "score": 4.55,
+  "review_summary": {
+    "pros": [
+      "키감이 쫀득하고 칠 때 기분이 좋습니다."
+    ],
+    "cons": [
+      "특이 단점 발견되지 않음"
+    ],
+    "overall": "키감이 쫀득하고 칠 때 기분이 좋습니다."
+  },
+  "risk": false,
+  "reason": "통과 (특이 리스크 키워드 없음)",
+  "affiliate_url": "https://link.coupang.com/re/AFFSD?lptag=AF12345&pageKey=kb_001",
+  "disclosure": "본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+  "competitor_analysis": {
+    "patterns": [
+      "ASMR 감성 타건"
+    ],
+    "benchmarks": []
+  },
+  "scene_briefs": [
+    {
+      "scene_number": 1,
+      "visual_description": "복잡하고 어두침침한 데스크 셋업에서 지저분한 선 때문에 키보드 타이핑하기 매우 불편해하는 유저의 1인칭 손동작 클로즈업.",
+      "audio_direction": "답답한 한숨 소리 효과음. '아직도 선 꼬이고 칙칙한 키보드로 지저분하게 작업하시나요?' 내레이션.",
+      "duration_seconds": 3.0
+    },
+    {
+      "scene_number": 2,
+      "visual_description": "선 없는 MX Keys Mini 무선 기계식 키보드 키보드를 배치하여 책상이 180도 깔끔해진 레이아웃. '키감이 쫀득하고 칠 때 기분이 좋습니다.' 강점을 드러내며 부드럽고 쫀득하게 타건하는 손모양 오버헤드 샷.",
+      "audio_direction": "사각사각 쫀득한 타건 기계식 소리 (ASMR 사운드 극대화). '쫀득한 특유의 키감에 멀티페어링까지, 책상 분위기가 확 달라집니다.' 내레이션.",
+      "duration_seconds": 9.0
+    },
+    {
+      "scene_number": 3,
+      "visual_description": "화면 중앙에 MX Keys Mini 무선 기계식 키보드 가격(139,000원) 텍스트 배너 노출. 하단에 제휴 광고 고지 자막(공정위 고지 준수) 작게 노출 및 고정 댓글 유도 그래픽 화살표.",
+      "audio_direction": "경쾌한 안내 효과음. '지금 아래 첫 번째 고정 댓글 링크에서 최저가 제휴 링크를 확인해 보세요!' 내레이션.",
+      "duration_seconds": 3.0
+    }
+  ],
+  "script": {
+    "overall_script": "아직도 선 꼬이고 칙칙한 키보드로 지저분하게 작업하시나요? 쫀득한 특유의 키감에 멀티페어링까지, 책상 분위기가 확 달라집니다. 지금 아래 첫 번째 고정 댓글 링크에서 최저가 제휴 링크를 확인해 보세요!",
+    "scenes_script": [
+      {
+        "scene_number": 1,
+        "narration": "아직도 선 꼬이고 칙칙한 키보드로 지저분하게 작업하시나요?"
+      },
+      {
+        "scene_number": 2,
+        "narration": "쫀득한 특유의 키감에 멀티페어링까지, 책상 분위기가 확 달라집니다."
+      },
+      {
+        "scene_number": 3,
+        "narration": "지금 아래 첫 번째 고정 댓글 링크에서 최저가 제휴 링크를 확인해 보세요!"
+      }
+    ]
+  },
+  "media_prompts": [
+    {
+      "scene_number": 1,
+      "image_prompt": "First-person view of a messy, dark desk, cluttered and tangled wires everywhere, a person typing with frustrated hand movements, moody shadows, dim dramatic lighting, photo-realistic, highly detailed, 8k resolution.",
+      "video_prompt": "First-person slow zoom in on a messy dark computer desk, cluttered cords tangling, hands typing in frustration, moody dramatic shadows, dim lighting, cinematic, 8k resolution, photo-realistic, unreal engine rendering."
+    },
+    {
+      "scene_number": 2,
+      "image_prompt": "Overhead view of a sleek, minimalist clean wooden desk setup, a modern slim wireless mechanical keyboard in the center, soft warm smart backlighting glowing, hands typing smoothly and effortlessly, clean desk style, photo-realistic, highly detailed, 8k resolution.",
+      "video_prompt": "Overhead view slow pan across a clean minimalist wooden desk setup, a wireless mechanical keyboard centered, smart backlighting glowing softly, hands typing smoothly, clean workspace style, cinematic, 8k resolution, photo-realistic, unreal engine rendering."
+    },
+    {
+      "scene_number": 3,
+      "image_prompt": "A modern graphic text banner showing product name and price, pointing down with clean modern design, high-quality professional graphic layout, clean background, highly detailed, 8k resolution.",
+      "video_prompt": "Clean animated text banner showing product name and price with neon glowing effects, graphic arrow pointing down, clean studio background, highly detailed, 8k resolution, cinematic."
+    }
+  ],
+  "media_assets": {
+    "videos": [
+      {
+        "scene_number": 1,
+        "file_path": "d:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\kb_001_scene1.mp4"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "d:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\kb_001_scene2.mp4"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "d:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\kb_001_scene3.mp4"
+      }
+    ],
+    "images": [
+      {
+        "scene_number": 1,
+        "file_path": "d:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\kb_001_scene1.png"
+      },
+      {
+        "scene_number": 2,
+        "file_path": "d:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\kb_001_scene2.png"
+      },
+      {
+        "scene_number": 3,
+        "file_path": "d:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\kb_001_scene3.png"
+      }
+    ]
+  }
+}

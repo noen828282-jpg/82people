@@ -1,11 +1,33 @@
 {
   "_migrated": true,
   "_migrated_v2": true,
+  "_migrated_v3": true,
+  "_migrated_v4": true,
+  "ceo": {
+    "activatedAt": "2026-05-31T05:32:22.131Z",
+    "seeded": true
+  },
   "secretary": {
     "activatedAt": "2026-05-31T05:32:22.131Z",
     "seeded": true
   },
+  "developer": {
+    "activatedAt": "2026-05-31T05:32:22.131Z",
+    "seeded": true
+  },
+  "business": {
+    "activatedAt": "2026-05-31T05:32:22.131Z",
+    "seeded": true
+  },
+  "researcher": {
+    "activatedAt": "2026-05-31T05:32:22.131Z",
+    "seeded": true
+  },
   "youtube": {
+    "activatedAt": "2026-05-31T05:32:22.131Z",
+    "seeded": true
+  },
+  "instagram": {
     "activatedAt": "2026-05-31T05:32:22.131Z",
     "seeded": true
   },
@@ -17,21 +39,8 @@
     "activatedAt": "2026-05-31T05:32:22.131Z",
     "seeded": true
   },
-  "instagram": {
-    "activatedAt": "2026-05-31T05:32:22.131Z",
+  "editor": {
+    "activatedAt": "2026-06-03T04:30:00.000Z",
     "seeded": true
-  },
-  "business": {
-    "activatedAt": "2026-05-31T05:32:22.131Z",
-    "seeded": true
-  },
-  "developer": {
-    "activatedAt": "2026-05-31T05:32:22.131Z",
-    "seeded": true
-  },
-  "researcher": {
-    "activatedAt": "2026-05-31T05:32:22.131Z",
-    "seeded": true
-  },
-  "_migrated_v3": true
+  }
 }

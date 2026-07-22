@@ -1,0 +1,41 @@
+{
+  "prod_id": "pad_001",
+  "title": "프리미엄 펠트 데스크 매트 리뷰!",
+  "title_suggestions": [
+    "프리미엄 펠트 데스크 매트 리뷰!",
+    "따뜻한 느낌의 데스크 매트 소개",
+    "고급스러운 펠트 매트, 꼭 보세요!"
+  ],
+  "description": "따뜻하고 고급스러운 느낌의 양모 펠트 데스크 매트를 소개합니다! 이 매트는 논슬립 패드로 밀림을 방지하여 안정적인 사용이 가능합니다. \n\n자세한 정보는 여기에서 확인하세요: [링크 삽입]\n\n본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+  "tags": [
+    "데스크매트",
+    "펠트매트",
+    "사무용품",
+    "인테리어",
+    "고급스러운",
+    "논슬립",
+    "프리미엄"
+  ],
+  "video_files": [
+    "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001_scene1.mp4",
+    "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001_scene2.mp4",
+    "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001_scene3.mp4"
+  ],
+  "subtitle_file": "D:\\dongmin ai company\\shorts-automation\\nodes\\assets\\output\\pad_001_package\\pad_001.srt",
+  "youtube_metadata": {
+    "categoryId": "28",
+    "privacyStatus": "public",
+    "selfDeclaredMadeForKids": false,
+    "title": "프리미엄 펠트 데스크 매트 리뷰!",
+    "description": "따뜻하고 고급스러운 느낌의 양모 펠트 데스크 매트를 소개합니다! 이 매트는 논슬립 패드로 밀림을 방지하여 안정적인 사용이 가능합니다. \n\n자세한 정보는 여기에서 확인하세요: [링크 삽입]\n\n본 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+    "tags": [
+      "데스크매트",
+      "펠트매트",
+      "사무용품",
+      "인테리어",
+      "고급스러운",
+      "논슬립",
+      "프리미엄"
+    ]
+  }
+}

@@ -19,18 +19,35 @@ config:
 설치 방법 (사용자):
   사파리·크롬에서 사이트 접속 → "홈 화면에 추가" → 풀스크린 앱 작동
 """
-import os, sys, json, base64, re
+import os
+import sys
+import json
+import base64
+import re
 
+# Windows 환경에서 유니코드(이모지 등) 출력 시 cp949 코덱 에러 방지
+if sys.platform.startswith("win"):
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            getattr(sys.stdout, "reconfigure")(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            getattr(sys.stderr, "reconfigure")(encoding="utf-8")
+    except AttributeError:
+        import io
+        stdout_buffer = getattr(sys.stdout, "buffer", None)
+        stderr_buffer = getattr(sys.stderr, "buffer", None)
+        if stdout_buffer:
+            setattr(sys, "stdout", io.TextIOWrapper(stdout_buffer, encoding="utf-8"))
+        if stderr_buffer:
+            setattr(sys, "stderr", io.TextIOWrapper(stderr_buffer, encoding="utf-8"))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.path.join(HERE, "pwa_setup.json")
 WEB_INIT_CONFIG = os.path.join(HERE, "web_init.json")
 
-
 def _log(msg, kind="info"):
     prefix = {"info": "💻", "ok": "✅", "warn": "⚠️ ", "err": "❌", "step": "▸"}.get(kind, "•")
     print(f"{prefix} {msg}", file=sys.stderr, flush=True)
-
 
 def _load(p):
     if os.path.exists(p):
@@ -40,7 +57,6 @@ def _load(p):
         except Exception:
             pass
     return {}
-
 
 def _generate_icon_svg(emoji, bg_color, size=512):
     """이모지 기반 SVG 아이콘 생성 (라운드 코너 + 그라데이션)."""
@@ -57,7 +73,6 @@ def _generate_icon_svg(emoji, bg_color, size=512):
 </svg>
 '''
 
-
 def _find_html(project_path):
     """프로젝트의 메인 HTML 찾기 (index.html, public/index.html, app/layout.tsx 등)."""
     candidates = [
@@ -70,16 +85,23 @@ def _find_html(project_path):
             return c
     return None
 
+def _safe_path(base_dir, *path_segments):
+    """Resolve and validate path to prevent path traversal."""
+    base_abs = os.path.abspath(base_dir)
+    target_abs = os.path.abspath(os.path.join(base_abs, *path_segments))
+    if not target_abs.startswith(base_abs):
+        raise PermissionError(f"Path traversal detected: {target_abs} is outside of {base_abs}")
+    return target_abs
 
 def _find_public_dir(project_path):
     """public 디렉토리 찾기 또는 만들기."""
-    public = os.path.join(project_path, "public")
+    project_path = os.path.abspath(project_path)
+    public = _safe_path(project_path, "public")
     if os.path.exists(public):
         return public
     # Vite는 public/, Next.js도 public/
     os.makedirs(public, exist_ok=True)
     return public
-
 
 def main():
     cfg = _load(CONFIG)
@@ -92,7 +114,13 @@ def main():
         _log("PROJECT_PATH가 비어있고 web_init 기록도 없음", "err")
         sys.exit(1)
 
-    project_path = os.path.expanduser(project_path)
+    project_path = os.path.abspath(os.path.expanduser(project_path))
+
+    # Path traversal validation (CWE-22 / CWE-538)
+    base_dir = os.path.abspath(os.path.expanduser("~"))
+    if not project_path.startswith(base_dir) and not project_path.startswith("D:\\") and not project_path.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid project path")
+
     if not os.path.isdir(project_path):
         _log(f"폴더 없음: {project_path}", "err")
         sys.exit(1)
@@ -106,6 +134,7 @@ def main():
     _log(f"PWA 셋업 시작 → {project_path}", "info")
 
     public = _find_public_dir(project_path)
+    base_dir = os.path.abspath(os.path.expanduser("~"))
 
     # 1. manifest.json
     manifest = {
@@ -122,20 +151,24 @@ def main():
             {"src": "/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any maskable"},
         ],
     }
-    manifest_path = os.path.join(public, "manifest.json")
+    manifest_path = _safe_path(public, "manifest.json")
+    if not manifest_path.startswith(base_dir) and not manifest_path.startswith("D:\\") and not manifest_path.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid path")
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
     _log(f"manifest.json 생성: {manifest_path}", "ok")
 
     # 2. 아이콘 (SVG로 — 모든 기기에서 잘 보임 + 작은 사이즈)
     for size in (192, 512):
-        icon_path = os.path.join(public, f"icon-{size}.svg")
+        icon_path = _safe_path(public, f"icon-{size}.svg")
+        if not icon_path.startswith(base_dir) and not icon_path.startswith("D:\\") and not icon_path.startswith("C:\\"):
+            raise PermissionError("Access denied: Invalid path")
         with open(icon_path, "w", encoding="utf-8") as f:
             f.write(_generate_icon_svg(icon_emoji, theme, size))
         _log(f"icon-{size}.svg 생성", "ok")
 
     # 3. service worker
-    sw_path = os.path.join(public, "sw.js")
+    sw_path = _safe_path(public, "sw.js")
     sw_content = f'''// Connect AI PWA Service Worker
 // version: pwa_v1 — auto-generated
 const CACHE = "{short_name}-v1";
@@ -163,6 +196,8 @@ self.addEventListener("fetch", e => {{
   );
 }});
 '''
+    if not sw_path.startswith(base_dir) and not sw_path.startswith("D:\\") and not sw_path.startswith("C:\\"):
+        raise PermissionError("Access denied: Invalid path")
     with open(sw_path, "w", encoding="utf-8") as f:
         f.write(sw_content)
     _log(f"sw.js 생성: {sw_path}", "ok")
@@ -198,6 +233,9 @@ self.addEventListener("fetch", e => {{
     </script>'''
 
     if html_file:
+        html_file = _safe_path(project_path, os.path.relpath(html_file, project_path))
+        if not html_file.startswith(base_dir) and not html_file.startswith("D:\\") and not html_file.startswith("C:\\"):
+            raise PermissionError("Access denied: Invalid path")
         with open(html_file, "r", encoding="utf-8") as f:
             html = f.read()
         if "manifest.json" in html:
@@ -207,6 +245,8 @@ self.addEventListener("fetch", e => {{
             new_html = re.sub(r"</head>", pwa_head + "\n  </head>", html, count=1, flags=re.IGNORECASE)
             # </body> 직전에 script 삽입
             new_html = re.sub(r"</body>", pwa_script + "\n  </body>", new_html, count=1, flags=re.IGNORECASE)
+            if not html_file.startswith(base_dir) and not html_file.startswith("D:\\") and not html_file.startswith("C:\\"):
+                raise PermissionError("Access denied: Invalid path")
             with open(html_file, "w", encoding="utf-8") as f:
                 f.write(new_html)
             _log(f"HTML 메타·script 주입: {html_file}", "ok")
@@ -237,7 +277,6 @@ self.addEventListener("fetch", e => {{
     _log("  2. iOS Safari: 공유 → 홈 화면에 추가", "info")
     _log("  3. Android Chrome: 우측 ⋮ → 홈 화면에 추가", "info")
     _log("  4. 풀스크린·아이콘·오프라인 작동 확인", "info")
-
 
 if __name__ == "__main__":
     main()
