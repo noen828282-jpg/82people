@@ -29,6 +29,9 @@ dist/
 paypal_debug.txt
 *.tmp
 
+# Completed Local Projects (Keep on local machine, exclude from Git)
+naver-blog-dashboard/
+
 # Python cache
 **/__pycache__/
 *.pyc
